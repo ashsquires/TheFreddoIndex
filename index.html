@@ -6,6 +6,9 @@
     <title>The Freddo Index</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Chart.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
       tailwind.config = {
         theme: {
@@ -57,18 +60,6 @@
           scrollbar-width: none;
       }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
-    "chart.js/auto": "https://esm.sh/chart.js@4.4.1/auto",
-    "chart.js/": "https://aistudiocdn.com/chart.js@^4.5.1/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "recharts": "https://aistudiocdn.com/recharts@^3.4.1"
-  }
-}
-</script>
 </head>
   <body class="min-h-screen flex flex-col font-sans text-gray-800">
     
@@ -181,11 +172,11 @@
                   <!-- Content State -->
                   <div id="details-content" class="animate-fade-in-up">
                       <p id="details-quote" class="text-xl md:text-2xl text-cadbury font-display font-bold mb-6 leading-snug">
-                          "Loading..."
+                          "35p? Christ"
                       </p>
                       <div class="inline-block bg-white px-4 py-2 rounded-full shadow-sm border border-purple-100">
                           <p id="details-author" class="text-gray-600 font-medium text-sm">
-                               — ...
+                               — Barbara, Wakefield
                           </p>
                       </div>
                   </div>
@@ -213,7 +204,203 @@
       </div>
     </footer>
 
-    <!-- Module Script -->
-    <script type="module" src="/index.tsx"></script>
+    <!-- Inline Script for Logic -->
+    <script>
+      // Data
+      const FREDDO_DATA = [
+        { year: 1995, price: 10, isGoldenEra: true },
+        { year: 1996, price: 10, isGoldenEra: true },
+        { year: 1997, price: 10, isGoldenEra: true },
+        { year: 1998, price: 10, isGoldenEra: true },
+        { year: 1999, price: 10, isGoldenEra: true },
+        { year: 2000, price: 10, isGoldenEra: true },
+        { year: 2001, price: 10, isGoldenEra: true },
+        { year: 2002, price: 10, isGoldenEra: true },
+        { year: 2003, price: 10, isGoldenEra: true },
+        { year: 2004, price: 10, isGoldenEra: true },
+        { year: 2005, price: 10, isGoldenEra: true },
+        { year: 2006, price: 10, isGoldenEra: true },
+        { year: 2007, price: 15, isGoldenEra: false },
+        { year: 2008, price: 15, isGoldenEra: false },
+        { year: 2009, price: 15, isGoldenEra: false },
+        { year: 2010, price: 15, isGoldenEra: false },
+        { year: 2011, price: 17, isGoldenEra: false },
+        { year: 2012, price: 20, isGoldenEra: false },
+        { year: 2013, price: 20, isGoldenEra: false },
+        { year: 2014, price: 20, isGoldenEra: false },
+        { year: 2015, price: 25, isGoldenEra: false },
+        { year: 2016, price: 25, isGoldenEra: false },
+        { year: 2017, price: 30, isGoldenEra: false },
+        { year: 2018, price: 25, isGoldenEra: false },
+        { year: 2019, price: 30, isGoldenEra: false },
+        { year: 2020, price: 30, isGoldenEra: false },
+        { year: 2021, price: 30, isGoldenEra: false },
+        { year: 2022, price: 30, isGoldenEra: false },
+        { year: 2023, price: 30, isGoldenEra: false },
+        { year: 2024, price: 30, isGoldenEra: false },
+        { year: 2025, price: 35, isGoldenEra: false },
+      ];
+
+      // Constants
+      const COLORS = {
+        golden: '#D8B4FE',   // Light Purple
+        inflation: '#8B5CF6', // Vivid Purple
+        hover: '#6D28D9',     // Deep Purple
+        selected: '#330072'   // Cadbury Purple
+      };
+
+      // State
+      let currentState = {
+        selectedYear: FREDDO_DATA[FREDDO_DATA.length - 1].year,
+        price: FREDDO_DATA[FREDDO_DATA.length - 1].price,
+        isGoldenEra: FREDDO_DATA[FREDDO_DATA.length - 1].isGoldenEra
+      };
+
+      let chartInstance = null;
+      let els = {};
+
+      document.addEventListener('DOMContentLoaded', () => {
+        // Initialize DOM Elements
+        els = {
+          headerPrice: document.getElementById('header-current-price'),
+          detailsYear: document.getElementById('details-year'),
+          detailsPrice: document.getElementById('details-price'),
+          detailsHeaderBg: document.getElementById('details-header-bg'),
+          detailsGoldenBadge: document.getElementById('details-golden-badge'),
+          detailsLoading: document.getElementById('details-loading'),
+          detailsContent: document.getElementById('details-content'),
+          detailsQuote: document.getElementById('details-quote'),
+          detailsAuthor: document.getElementById('details-author'),
+          detailsContext: document.getElementById('details-context'),
+          footerYear: document.getElementById('footer-year'),
+          canvas: document.getElementById('freddoChart')
+        };
+
+        if (els.footerYear) els.footerYear.textContent = new Date().getFullYear().toString();
+        
+        initChart();
+        updateUI();
+        // No fetch needed, hardcoded content is default
+      });
+
+      function initChart() {
+        if (!els.canvas) return;
+
+        const ctx = els.canvas.getContext('2d');
+        if (!ctx) return;
+
+        chartInstance = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: FREDDO_DATA.map(d => d.year),
+            datasets: [{
+              data: FREDDO_DATA.map(d => d.price),
+              borderRadius: 4,
+              backgroundColor: getBackgroundColors(currentState.selectedYear),
+              hoverBackgroundColor: COLORS.hover,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            onClick: (event, elements) => {
+              if (elements.length > 0) {
+                const index = elements[0].index;
+                const selectedData = FREDDO_DATA[index];
+                handleYearSelect(selectedData);
+              }
+            },
+            onHover: (event, elements) => {
+               if(event.native && event.native.target) {
+                  (event.native.target).style.cursor = elements.length ? 'pointer' : 'default';
+               }
+            },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: '#FFF',
+                titleColor: '#330072',
+                bodyColor: '#4CBB17',
+                bodyFont: { size: 14, weight: 'bold' },
+                titleFont: { size: 14, weight: 'bold', family: 'Fredoka' },
+                borderColor: '#330072',
+                borderWidth: 1,
+                displayColors: false,
+                padding: 12,
+                cornerRadius: 8,
+                callbacks: {
+                  label: (context) => `${context.raw}p`
+                }
+              }
+            },
+            scales: {
+              x: {
+                grid: { display: false },
+                ticks: { font: { size: 12, family: 'Inter' }, color: '#666' }
+              },
+              y: {
+                border: { display: false },
+                grid: { color: '#f0f0f0' },
+                ticks: { 
+                    stepSize: 10,
+                    font: { size: 12, family: 'Inter' }, 
+                    color: '#666'
+                },
+                min: 0,
+                max: 40
+              }
+            }
+          }
+        });
+      }
+
+      function getBackgroundColors(selectedYear) {
+        return FREDDO_DATA.map(d => {
+          if (d.year === selectedYear) return COLORS.selected;
+          return d.isGoldenEra ? COLORS.golden : COLORS.inflation;
+        });
+      }
+
+      function handleYearSelect(data) {
+        // Update State
+        currentState.selectedYear = data.year;
+        currentState.price = data.price;
+        currentState.isGoldenEra = data.isGoldenEra;
+
+        // Update Chart Colors
+        if (chartInstance) {
+          chartInstance.data.datasets[0].backgroundColor = getBackgroundColors(currentState.selectedYear);
+          chartInstance.update();
+        }
+
+        // Update UI immediate
+        updateUI();
+      }
+
+      function updateUI() {
+        if (!els.detailsYear) return;
+
+        // Update Right Panel Static Data
+        els.detailsYear.textContent = currentState.selectedYear.toString();
+        if(els.detailsPrice) els.detailsPrice.textContent = `${currentState.price}p`;
+
+        // Golden Era Styling
+        if (currentState.isGoldenEra) {
+          els.detailsHeaderBg?.classList.remove('bg-cadbury-light');
+          els.detailsHeaderBg?.classList.add('bg-freddo-red');
+          els.detailsGoldenBadge?.classList.remove('hidden');
+        } else {
+          els.detailsHeaderBg?.classList.add('bg-cadbury-light');
+          els.detailsHeaderBg?.classList.remove('bg-freddo-red');
+          els.detailsGoldenBadge?.classList.add('hidden');
+        }
+
+        // Context Text
+        if(els.detailsContext) {
+            const diff = 2025 - currentState.selectedYear;
+            els.detailsContext.textContent = diff === 0 ? "Present Day" : `${diff} years ago`;
+        }
+      }
+    </script>
   </body>
 </html>
