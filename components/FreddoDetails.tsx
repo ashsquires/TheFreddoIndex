@@ -1,5 +1,6 @@
 import React from 'react';
 import { FreddoYearData, CommentaryResponse, LoadingState } from '../types';
+import { CURRENT_FREDDO_YEAR } from '../constants';
 
 interface FreddoDetailsProps {
   data: FreddoYearData;
@@ -10,6 +11,7 @@ interface FreddoDetailsProps {
 const FreddoDetails: React.FC<FreddoDetailsProps> = ({ data, commentary, loading }) => {
   
   const isGoldenEra = data.price === 10;
+  const yearsAgo = CURRENT_FREDDO_YEAR - data.year;
 
   return (
     <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-cadbury/10 transition-all duration-300 hover:shadow-2xl h-full flex flex-col">
@@ -59,7 +61,7 @@ const FreddoDetails: React.FC<FreddoDetailsProps> = ({ data, commentary, loading
         {/* Inflation Context */}
         <div className="text-center border-t border-gray-100 pt-4">
             <p className="text-xs text-gray-400 uppercase tracking-widest font-bold">
-                {data.year === 2025 ? "Present Day" : `${2025 - data.year} years ago`}
+                {yearsAgo === 0 ? "Present Day" : `${yearsAgo} years ago`}
             </p>
         </div>
 

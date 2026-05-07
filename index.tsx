@@ -1,5 +1,5 @@
 import Chart from 'chart.js/auto';
-import { FREDDO_DATA } from './constants';
+import { CURRENT_FREDDO_YEAR, FREDDO_DATA } from './constants';
 import { fetchFreddoCommentary } from './services/geminiService';
 import { LoadingState } from './types';
 
@@ -162,7 +162,7 @@ function updateUI() {
 
   // Context Text
   if(els.detailsContext) {
-      const diff = 2025 - currentState.selectedYear;
+      const diff = CURRENT_FREDDO_YEAR - currentState.selectedYear;
       els.detailsContext.textContent = diff === 0 ? "Present Day" : `${diff} years ago`;
   }
 }

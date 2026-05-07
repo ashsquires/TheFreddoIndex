@@ -20,6 +20,8 @@ interface FreddoChartProps {
 
 const FreddoChart: React.FC<FreddoChartProps> = ({ data, onYearSelect, selectedYear }) => {
   const [hoveredYear, setHoveredYear] = useState<number | null>(null);
+  const startYear = data[0]?.year;
+  const endYear = data[data.length - 1]?.year;
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -36,7 +38,7 @@ const FreddoChart: React.FC<FreddoChartProps> = ({ data, onYearSelect, selectedY
 
   return (
     <div className="w-full bg-white p-4 rounded-3xl shadow-sm border border-gray-100">
-      <h2 className="text-xl font-bold text-cadbury mb-6 pl-2 border-l-4 border-cadbury">Price History (1995 - 2025)</h2>
+      <h2 className="text-xl font-bold text-cadbury mb-6 pl-2 border-l-4 border-cadbury">Price History ({startYear} - {endYear})</h2>
       
       <div className="w-full">
         <div className="h-[400px] md:h-[500px]">

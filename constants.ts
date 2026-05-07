@@ -31,8 +31,11 @@ export const FREDDO_DATA: FreddoYearData[] = [
   { year: 2022, price: 30, isGoldenEra: false },
   { year: 2023, price: 30, isGoldenEra: false },
   { year: 2024, price: 35, isGoldenEra: false },
-  { year: 2025, price: 35, isGoldenEra: false }, // Projected/Current
+  { year: 2025, price: 35, isGoldenEra: false },
+  { year: 2026, price: 35, isGoldenEra: false }, // Current
 ];
+
+export const CURRENT_FREDDO_YEAR = FREDDO_DATA[FREDDO_DATA.length - 1].year;
 
 export const GEMINI_SYSTEM_INSTRUCTION = `
 You are a creative writer generating fake vox-pop quotes from British citizens reacting to the price of a Freddo chocolate bar in a specific year.
