@@ -1,5 +1,5 @@
 {
-  "name": "The Freddo Index",
-  "description": "An interactive tracker of the UK's most critical economic indicator: The price of a Freddo bar.",
+  "name": "The Original Freddo Index",
+  "description": "Explore historical Freddo prices and what a 10p Freddo would cost if it had followed UK inflation since 1995.",
   "requestFramePermissions": []
 }

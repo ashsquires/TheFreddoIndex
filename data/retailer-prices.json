@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "mode": "snapshot",
+  "snapshotAt": "2026-09-16T13:30:00Z",
+  "displayPeriod": "September 2026",
+  "scope": "Public online prices, signed out, without a delivery postcode. In-store and local prices may differ.",
+  "observations": [
+    {
+      "retailerId": "sainsburys",
+      "sourceUrl": "https://www.sainsburys.co.uk/groceries/product/cadbury-dairy-milk-freddo-chocolate-bar-18g",
+      "productName": "Cadbury Dairy Milk Freddo Chocolate Bar 18g",
+      "pricePence": 45,
+      "currency": "GBP",
+      "weightGrams": 18,
+      "packCount": 1,
+      "variant": "milk-chocolate",
+      "priceType": "standard",
+      "availability": "available",
+      "checkedAt": "2026-09-16T10:54:00Z",
+      "method": "browser-verified",
+      "evidence": "Cadbury Dairy Milk Freddo Chocolate Bar 18g. 45p. £25.00 / kg. Add to basket."
+    },
+    {
+      "retailerId": "asda",
+      "sourceUrl": "https://www.asda.com/groceries/product/5803656",
+      "productName": "Cadbury Dairy Milk Freddo Chocolate Bar 18 g",
+      "pricePence": 34,
+      "currency": "GBP",
+      "weightGrams": 18,
+      "packCount": 1,
+      "variant": "milk-chocolate",
+      "priceType": "standard",
+      "availability": "available",
+      "checkedAt": "2026-09-16T10:56:00Z",
+      "method": "browser-verified",
+      "evidence": "Cadbury Dairy Milk Freddo Chocolate Bar 18 g. Actual price £0.34. £18.89/kg. Add item to cart."
+    },
+    {
+      "retailerId": "tesco",
+      "sourceUrl": "https://www.tesco.com/shop/en-GB/products/275341411",
+      "productName": "Cadbury Dairy Milk Freddo Chocolate Bar Single 18g",
+      "pricePence": 35,
+      "currency": "GBP",
+      "weightGrams": 18,
+      "packCount": 1,
+      "variant": "milk-chocolate",
+      "priceType": "standard",
+      "availability": "available",
+      "checkedAt": "2026-09-16T10:57:00Z",
+      "method": "browser-verified",
+      "evidence": "Cadbury Dairy Milk Freddo Chocolate Bar Single 18g. Everyday Low Price. £0.35. £19.44/kg. Add 1."
+    },
+    {
+      "retailerId": "morrisons",
+      "sourceUrl": "https://groceries.morrisons.com/products/cadbury-dairy-milk-freddo-chocolate-bar-4-pack-multipack/115225381",
+      "productName": "Cadbury Dairy Milk Freddo Chocolate Bar 4 Pack Multipack",
+      "pricePence": 100,
+      "currency": "GBP",
+      "weightGrams": 18,
+      "packCount": 4,
+      "variant": "milk-chocolate",
+      "priceType": "promotion",
+      "availability": "available",
+      "checkedAt": "2026-09-16T10:58:00Z",
+      "method": "browser-verified",
+      "evidence": "Cadbury Dairy Milk Freddo Chocolate Bar 4 Pack Multipack. 4 x 18g. £1.00. Previous price £1.50.",
+      "note": "Single-bar listing not found in the public Freddo search. This does not establish absence in every store."
+    }
+  ],
+  "benchmarks": {
+    "copper": {
+      "name": "Bright copper wire (scrap)",
+      "currency": "GBP",
+      "pricePerKg": 8.4,
+      "checkedAt": "2026-09-16T10:57:00Z",
+      "sourceName": "Alveronix",
+      "sourceUrl": "https://www.alveronix.co.uk/",
+      "basis": "Indicative scrap buying rate, subject to grading. A retail chocolate price versus a scrap buying price, for perspective; not a copper retail or exchange quote.",
+      "icon": "🧵",
+      "displayName": "Copper",
+      "description": "Bright wire · scrap"
+    },
+    "lithium": {
+      "name": "Lithium",
+      "currency": "GBP",
+      "pricePerKg": 15.01,
+      "checkedAt": "2026-09-16T11:35:00Z",
+      "referenceDate": "2026-09-15",
+      "sourceName": "Daily Metal Price",
+      "sourceUrl": "https://www.dailymetalprice.com/metalprices.php?c=li&d=20&u=kg&x=GBP",
+      "methodUrl": "https://www.dailymetalprice.com/lithium.html",
+      "basis": "Published GBP quote for 15 September 2026. The provider tracks lithium carbonate, not pure lithium metal. This is a commodity reference, not a retail purchase price. The earlier £15.31 quote was dated 14 September.",
+      "icon": "🔋",
+      "displayName": "Lithium",
+      "description": "Commodity quote"
+    },
+    "dairy_milk": {
+      "name": "Cadbury Dairy Milk 110g",
+      "currency": "GBP",
+      "pricePerKg": 16.82,
+      "checkedAt": "2026-09-16T13:26:52Z",
+      "priceType": "retail",
+      "sourceName": "Tesco",
+      "sourceUrl": "https://www.tesco.com/shop/en-GB/products/284117451",
+      "basis": "Tesco's public standard price was £1.85 for a 110g bar, with a displayed unit price of £16.82/kg. The separate £1.50 Clubcard offer is excluded. Online prices may vary by location. It was checked within 48 hours of the snapshot cut-off; current prices may differ.",
+      "icon": "🍫",
+      "displayName": "Cadbury Dairy Milk",
+      "description": "110g bar · Tesco"
+    },
+    "lobster": {
+      "name": "Whole cooked lobster",
+      "currency": "GBP",
+      "pricePerKg": 26.72,
+      "checkedAt": "2026-09-16T11:34:00Z",
+      "priceType": "promotion",
+      "sourceName": "Waitrose",
+      "sourceUrl": "https://www.waitrose.com/ecom/products/canadian-whole-cooked-lobster/596893-312313-312314?pp=1",
+      "basis": "Waitrose's displayed unit price for its frozen Canadian whole cooked lobster, 350g, on offer at £9.35 (was £12.50). Includes shell; not the price of edible meat alone. We use the retailer's stated £26.72/kg, which differs slightly from dividing the rounded pack price by its weight. Delivery is excluded. This offer was checked within 48 hours of the snapshot cut-off; current prices may differ.",
+      "icon": "🦞",
+      "displayName": "Lobster",
+      "description": "Whole, shell-on · offer"
+    }
+  },
+  "commodityExtras": [
+    {
+      "id": "approval",
+      "name": "My father’s approval",
+      "icon": "🏆",
+      "displayPrice": "Priceless",
+      "description": "Still waiting."
+    }
+  ]
+}

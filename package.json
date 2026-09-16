@@ -4,9 +4,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/render-data.mjs && node scripts/render-retailers.mjs",
     "dev": "vite",
+    "test": "node --test tests/*.test.js",
+    "prebuild": "node scripts/render-data.mjs && node scripts/render-retailers.mjs",
     "build": "vite build",
-    "preview": "vite preview"
+    "postbuild": "node scripts/copy-static.mjs",
+    "preview": "vite preview",
+    "preview:comments": "npm run build && node scripts/preview-comments.mjs",
+    "prices:check": "node scripts/check-retailer-sources.mjs",
+    "prices:import": "node scripts/import-retailer-observations.mjs"
   },
   "dependencies": {
     "@google/genai": "^1.30.0",
@@ -15,6 +22,7 @@
     "recharts": "^3.4.1"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
     "typescript": "~5.8.2",

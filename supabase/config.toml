@@ -1,0 +1,6 @@
+project_id = "the-freddo-index"
+
+# Intentionally public nickname-based comments. The handler validates input,
+# rate-limits database writes and only exposes approved comments.
+[functions.comments]
+verify_jwt = false

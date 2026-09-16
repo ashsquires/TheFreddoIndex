@@ -1,9 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Google tag (gtag.js) -->
+    <title>The Original Freddo Index | Prices &amp; Inflation</title>
+    <meta name="description" content="Remember 10p Freddos? Explore Freddo prices since 1995, compare them with UK inflation, and see what your chocolate frog would cost. The Original Freddo Index." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#330072" />
+    <link rel="canonical" href="https://thefreddoindex.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The Original Freddo Index" />
+    <meta property="og:title" content="The Original Freddo Index | Prices &amp; Inflation" />
+    <meta property="og:description" content="One small frog. One big price rise. Compare Freddo prices with what they would cost if they had followed UK inflation." />
+    <meta property="og:url" content="https://thefreddoindex.com/" />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:image" content="https://thefreddoindex.com/assets/freddo-index-social.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="The Original Freddo Index. One small frog. One big price rise. Freddo price history and UK inflation since 1995." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://thefreddoindex.com/assets/freddo-index-social.png" />
+    <meta name="twitter:image:alt" content="The Original Freddo Index — Freddo price history and UK inflation since 1995." />
+    <meta name="twitter:title" content="The Original Freddo Index" />
+    <meta name="twitter:description" content="What would a Freddo cost if it had followed inflation? Explore the price of Britain's favourite chocolate economic indicator." />
+    <link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon-frog-96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-frog.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://thefreddoindex.com/#website",
+            "url": "https://thefreddoindex.com/",
+            "name": "The Original Freddo Index",
+            "alternateName": ["The Freddo Index", "Freddo Index"],
+            "description": "Approximate Freddo price history since 1995 compared with UK CPI inflation.",
+            "inLanguage": "en-GB"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://thefreddoindex.com/#webpage",
+            "url": "https://thefreddoindex.com/",
+            "name": "The Original Freddo Index | Prices & Inflation",
+            "isPartOf": { "@id": "https://thefreddoindex.com/#website" },
+            "description": "Explore historical Freddo prices and what a 10p Freddo would cost if it had followed UK inflation since 1995.",
+            "inLanguage": "en-GB"
+          }
+        ]
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <!-- Preserve the site's existing analytics property. -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZXG0LM7NCJ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -11,405 +62,182 @@
       gtag('js', new Date());
       gtag('config', 'G-ZXG0LM7NCJ');
     </script>
-    <title>The Freddo Index</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <!-- Chart.js via CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              cadbury: {
-                DEFAULT: '#330072',
-                light: '#4E2A84',
-                dark: '#240051',
-                accent: '#E6E6FA', // Lavender
-              },
-              freddo: {
-                green: '#4CBB17',
-                red: '#D00000', // For the 10p era
-                pink: '#F4C2C2', // For the inflation era
-              }
-            },
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              display: ['Fredoka', 'sans-serif'],
-            },
-            animation: {
-              'bounce': 'bounce 1s infinite',
-              'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
-            },
-            keyframes: {
-              bounce: {
-                '0%, 100%': { transform: 'translateY(-25%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
-                '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
-              },
-              fadeInUp: {
-                '0%': { opacity: '0', transform: 'translateY(10px)' },
-                '100%': { opacity: '1', transform: 'translateY(0)' },
-              }
-            }
-          }
-        }
-      }
-    </script>
-    <style>
-      body {
-        background-color: #f8f5fa;
-      }
-      .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-      }
-      .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-      }
-    </style>
-</head>
-  <body class="min-h-screen flex flex-col font-sans text-gray-800">
-    
-    <!-- Header -->
-    <header class="w-full bg-cadbury text-white py-6 shadow-lg sticky top-0 z-50 border-b-4 border-freddo-green">
-      <div class="max-w-5xl mx-auto px-4 flex justify-between items-center">
-        <div class="flex items-center gap-3">
-          <div class="text-3xl animate-bounce">🐸</div>
-          <div>
-            <h1 class="text-2xl md:text-3xl font-display font-bold tracking-wide text-white">
-              The Freddo Index
-            </h1>
-            <p class="text-xs md:text-sm text-cadbury-accent opacity-80 font-sans">
-              Tracking inflation, one frog at a time.
-            </p>
-          </div>
-        </div>
-        <div class="hidden md:block text-right">
-            <div class="text-xs font-bold bg-white/10 px-3 py-1 rounded-full">
-                Current Price: <span id="header-current-price">35p</span> 😱
-            </div>
-        </div>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+    <script type="module" src="./freddo.js"></script>
+    <script type="module" src="./contact.js"></script>
+    <script type="module" src="./leaderboard.js"></script>
+  </head>
+  <body data-current-average="38" data-current-shops="3" data-price-period="September 2026">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="./" aria-label="The Original Freddo Index home">
+          <img class="brand-logo" src="./assets/freddo-index-logo.png" alt="" width="270" height="90" />
+        </a>
+        <nav aria-label="Main navigation">
+          <a href="#history">The index <span aria-hidden="true">↗</span></a>
+          <a href="#methodology">How it works</a>
+        </nav>
       </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-4 py-8 md:py-12">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-        
-        <!-- Left Column: Chart -->
-        <div class="lg:col-span-2 flex flex-col gap-12">
-          <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-             <div class="prose prose-purple max-w-none mb-4">
-               <h2 class="font-display text-2xl text-cadbury">The Trajectory of Tragedy</h2>
-               <p class="text-gray-600">
-                 Select a bar below to see what life was like when Freddos were affordable (or not).
-               </p>
-             </div>
-             
-             <!-- Chart Container -->
-             <div class="w-full bg-white rounded-3xl">
-                <div class="h-[400px] md:h-[500px] relative w-full">
-                    <canvas id="freddoChart"></canvas>
-                </div>
-                
-                <!-- Legend -->
-                <div class="flex justify-center gap-6 mt-6 text-xs text-gray-500 flex-wrap">
-                   <div class="flex items-center gap-2">
-                      <div class="w-3 h-3 bg-[#D8B4FE] rounded-sm"></div>
-                      <span>The Golden Era (10p)</span>
-                   </div>
-                   <div class="flex items-center gap-2">
-                      <div class="w-3 h-3 bg-[#8B5CF6] rounded-sm"></div>
-                      <span>Inflation Era</span>
-                   </div>
-                   <div class="flex items-center gap-2">
-                      <div class="w-3 h-3 bg-cadbury rounded-sm"></div>
-                      <span>Selected</span>
-                   </div>
-                </div>
-             </div>
-          </div>
-          
-          <!-- Stats Row -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div class="bg-cadbury text-white p-4 rounded-2xl flex flex-col justify-center items-center text-center">
-                  <span class="text-3xl font-bold">260%</span>
-                  <span class="text-xs opacity-80 uppercase tracking-wider">Total Inflation since 1995</span>
-              </div>
-              <div class="bg-freddo-green text-white p-4 rounded-2xl flex flex-col justify-center items-center text-center">
-                   <span class="text-3xl font-bold">10p</span>
-                   <span class="text-xs opacity-80 uppercase tracking-wider">Lowest Price</span>
-              </div>
-              <div class="bg-freddo-red text-white p-4 rounded-2xl flex flex-col justify-center items-center text-center">
-                   <span class="text-3xl font-bold">35p</span>
-                   <span class="text-xs opacity-80 uppercase tracking-wider">Peak Panic</span>
-              </div>
+    <aside id="price-ticker" class="price-ticker" aria-label="Freddo supermarket prices">
+      <!-- PRICE_TICKER_START -->
+<div class="shell price-ticker-inner"><a class="ticker-label" href="#leaderboard"><span>Freddo Exchange</span><small>September 2026 · 18g bars</small></a><div class="ticker-scroll" tabindex="0" role="region" aria-label="Supermarket prices. Moving prices pause on hover or focus."><div class="ticker-track"><ul class="ticker-quotes"><li><a href="https://www.sainsburys.co.uk/groceries/product/cadbury-dairy-milk-freddo-chocolate-bar-18g" target="_blank" rel="noopener noreferrer"><span class="ticker-logo"><img src="./assets/retailers/sainsburys.png" alt="Sainsbury’s" width="72" height="32" /></span><span class="ticker-copy"><span class="ticker-quote-line"><strong>45p</strong></span><small>September 2026</small></span></a></li><li><a href="https://www.tesco.com/shop/en-GB/products/275341411" target="_blank" rel="noopener noreferrer"><span class="ticker-logo"><img src="./assets/retailers/tesco.svg" alt="Tesco" width="72" height="32" /></span><span class="ticker-copy"><span class="ticker-quote-line"><strong>35p</strong></span><small>September 2026</small></span></a></li><li><a href="https://www.asda.com/groceries/product/5803656" target="_blank" rel="noopener noreferrer"><span class="ticker-logo"><img src="./assets/retailers/asda.avif" alt="ASDA" width="72" height="32" /></span><span class="ticker-copy"><span class="ticker-quote-line"><strong>34p</strong></span><small>September 2026</small></span></a></li><li><a href="https://groceries.morrisons.com/products/cadbury-dairy-milk-freddo-chocolate-bar-4-pack-multipack/115225381" target="_blank" rel="noopener noreferrer"><span class="ticker-logo"><img src="./assets/retailers/morrisons.png" alt="Morrisons" width="72" height="32" /></span><span class="ticker-copy"><span class="ticker-quote-line"><strong>£1.00 / 4 pack</strong></span><small>September 2026 · multipack · offer</small></span></a></li></ul><ul class="ticker-quotes ticker-duplicate" aria-hidden="true"><li><a tabindex="-1" href="https://www.sainsburys.co.uk/groceries/product/cadbury-dairy-milk-freddo-chocolate-bar-18g" target="_blank" rel="noopener noreferrer"><span class="ticker-logo"><img src="./assets/retailers/sainsburys.png" alt="Sainsbury’s" width="72" height="32" /></span><span class="ticker-copy"><span class="ticker-quote-line"><strong>45p</strong></span><small>September 2026</small></span></a></li><li><a tabindex="-1" href="https://www.tesco.com/shop/en-GB/products/275341411" target="_blank" rel="noopener noreferrer"><span class="ticker-logo"><img src="./assets/retailers/tesco.svg" alt="Tesco" width="72" height="32" /></span><span class="ticker-copy"><span class="ticker-quote-line"><strong>35p</strong></span><small>September 2026</small></span></a></li><li><a tabindex="-1" href="https://www.asda.com/groceries/product/5803656" target="_blank" rel="noopener noreferrer"><span class="ticker-logo"><img src="./assets/retailers/asda.avif" alt="ASDA" width="72" height="32" /></span><span class="ticker-copy"><span class="ticker-quote-line"><strong>34p</strong></span><small>September 2026</small></span></a></li><li><a tabindex="-1" href="https://groceries.morrisons.com/products/cadbury-dairy-milk-freddo-chocolate-bar-4-pack-multipack/115225381" target="_blank" rel="noopener noreferrer"><span class="ticker-logo"><img src="./assets/retailers/morrisons.png" alt="Morrisons" width="72" height="32" /></span><span class="ticker-copy"><span class="ticker-quote-line"><strong>£1.00 / 4 pack</strong></span><small>September 2026 · multipack · offer</small></span></a></li></ul></div></div></div>
+<!-- PRICE_TICKER_END -->
+    </aside>
+
+    <main id="main" class="shell">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <h1 id="hero-title" class="eyebrow"><span class="green-dot" aria-hidden="true"></span> The Original Freddo Index</h1>
+          <p class="hero-headline">One small frog.<br />One <span class="hero-emphasis">big price rise.</span></p>
+          <p class="hero-description">What would a Freddo cost if it had followed inflation?<br class="desktop-break" /> We did the maths. You might want to sit down.</p>
+        </div>
+        <aside class="hero-price-tile" aria-label="The people’s economic indicator">
+          <p class="hero-price-kicker">The people’s<br />economic indicator</p>
+          <p class="hero-price-number" id="hero-price">38<span>p</span></p>
+          <p class="hero-price-basis" id="hero-price-basis">September 2026 average</p>
+          <p class="hero-price-note" id="hero-price-note">3 supermarkets · 18g single bars</p>
+          <a class="hero-price-link" href="#leaderboard">See the price watch <span aria-hidden="true">↗</span></a>
+        </aside>
+      </section>
+
+      <div class="index-dashboard">
+      <section id="history" class="history-panel" aria-labelledby="history-title">
+        <div class="section-heading chart-heading">
+          <div><p class="eyebrow">The long view</p><h2 id="history-title">The trajectory of tragedy<span class="brand-dot">.</span></h2><p class="section-description">Thirty years of “weren’t these 10p?”</p></div>
+          <div class="current-price" id="latest-retailer-prices">
+            <!-- LATEST_RETAILERS_START -->
+<p class="current-price-label">Price range</p><a href="#leaderboard" id="details-price" aria-label="September 2026 supermarket prices: 34 to 45 pence. View sources.">34–45<span>p</span></a><p class="current-price-note">18g · September 2026 snapshot</p>
+<!-- LATEST_RETAILERS_END -->
           </div>
         </div>
+        <div class="chart-toolbar">
+        <div class="chart-legend" aria-label="Chart legend">
+          <span><i class="legend-bar" aria-hidden="true"></i><span id="chart-price-legend">Approximate history · 2026 checked average</span></span>
+          <span><i class="legend-line" aria-hidden="true"></i>If it followed inflation</span>
+        </div>
+        </div>
+        <div class="chart-container"><canvas id="freddoChart" role="img" tabindex="0" aria-describedby="chart-help" aria-label="Freddo prices and the inflation-only benchmark from 1995 to 2026. Use left and right arrow keys to select a year; Home for 1995 and End for 2026."></canvas><p id="chart-error" hidden>The chart couldn’t load. You can still explore every year in the table below.</p></div>
+        <div class="chart-bottom"><p id="chart-help">2026 uses the 3-supermarket average. Tap a bar or use ← → to explore.</p><p>Prices in pence · 10p starting point</p></div>
+        <div id="year-detail" class="year-detail" aria-live="polite"><span class="year-badge">2026</span><p>The checked 3-supermarket average is 38.0p. If it had followed inflation from 1995, it would be 21.4p. 16.6p above the inflation-only price.</p></div>
+        <details class="data-disclosure"><summary>View the numbers</summary><div class="table-scroll" tabindex="0" role="region" aria-label="Historical price data"><table><caption id="price-table-caption">Approximate historical Freddo prices; 2026 uses the checked supermarket average. Inflation is a hypothetical benchmark.</caption><thead><tr><th scope="col">Year</th><th scope="col">Freddo price</th><th scope="col">Following inflation</th><th scope="col">Difference</th><th scope="col">CPI period</th></tr></thead><tbody id="price-table"><!-- PRICE_ROWS_START -->
+<tr data-year="1995"><th scope="row">1995</th><td>10p</td><td>10.0p</td><td>0.0p</td><td>1995 annual average</td></tr>
+<tr data-year="1996"><th scope="row">1996</th><td>10p</td><td>10.2p</td><td>-0.2p</td><td>1996 annual average</td></tr>
+<tr data-year="1997"><th scope="row">1997</th><td>10p</td><td>10.4p</td><td>-0.4p</td><td>1997 annual average</td></tr>
+<tr data-year="1998"><th scope="row">1998</th><td>10p</td><td>10.6p</td><td>-0.6p</td><td>1998 annual average</td></tr>
+<tr data-year="1999"><th scope="row">1999</th><td>10p</td><td>10.7p</td><td>-0.7p</td><td>1999 annual average</td></tr>
+<tr data-year="2000"><th scope="row">2000</th><td>10p</td><td>10.8p</td><td>-0.8p</td><td>2000 annual average</td></tr>
+<tr data-year="2001"><th scope="row">2001</th><td>10p</td><td>11.0p</td><td>-1.0p</td><td>2001 annual average</td></tr>
+<tr data-year="2002"><th scope="row">2002</th><td>10p</td><td>11.1p</td><td>-1.1p</td><td>2002 annual average</td></tr>
+<tr data-year="2003"><th scope="row">2003</th><td>10p</td><td>11.2p</td><td>-1.2p</td><td>2003 annual average</td></tr>
+<tr data-year="2004"><th scope="row">2004</th><td>10p</td><td>11.4p</td><td>-1.4p</td><td>2004 annual average</td></tr>
+<tr data-year="2005"><th scope="row">2005</th><td>10p</td><td>11.6p</td><td>-1.6p</td><td>2005 annual average</td></tr>
+<tr data-year="2006"><th scope="row">2006</th><td>10p</td><td>11.9p</td><td>-1.9p</td><td>2006 annual average</td></tr>
+<tr data-year="2007"><th scope="row">2007</th><td>15p</td><td>12.2p</td><td>+2.8p</td><td>2007 annual average</td></tr>
+<tr data-year="2008"><th scope="row">2008</th><td>15p</td><td>12.6p</td><td>+2.4p</td><td>2008 annual average</td></tr>
+<tr data-year="2009"><th scope="row">2009</th><td>15p</td><td>12.9p</td><td>+2.1p</td><td>2009 annual average</td></tr>
+<tr data-year="2010"><th scope="row">2010</th><td>15p</td><td>13.3p</td><td>+1.7p</td><td>2010 annual average</td></tr>
+<tr data-year="2011"><th scope="row">2011</th><td>17p</td><td>13.9p</td><td>+3.1p</td><td>2011 annual average</td></tr>
+<tr data-year="2012"><th scope="row">2012</th><td>20p</td><td>14.3p</td><td>+5.7p</td><td>2012 annual average</td></tr>
+<tr data-year="2013"><th scope="row">2013</th><td>20p</td><td>14.7p</td><td>+5.3p</td><td>2013 annual average</td></tr>
+<tr data-year="2014"><th scope="row">2014</th><td>20p</td><td>14.9p</td><td>+5.1p</td><td>2014 annual average</td></tr>
+<tr data-year="2015"><th scope="row">2015</th><td>25p</td><td>14.9p</td><td>+10.1p</td><td>2015 annual average</td></tr>
+<tr data-year="2016"><th scope="row">2016</th><td>25p</td><td>15.0p</td><td>+10.0p</td><td>2016 annual average</td></tr>
+<tr data-year="2017"><th scope="row">2017</th><td>30p</td><td>15.4p</td><td>+14.6p</td><td>2017 annual average</td></tr>
+<tr data-year="2018"><th scope="row">2018</th><td>25p</td><td>15.8p</td><td>+9.2p</td><td>2018 annual average</td></tr>
+<tr data-year="2019"><th scope="row">2019</th><td>30p</td><td>16.0p</td><td>+14.0p</td><td>2019 annual average</td></tr>
+<tr data-year="2020"><th scope="row">2020</th><td>30p</td><td>16.2p</td><td>+13.8p</td><td>2020 annual average</td></tr>
+<tr data-year="2021"><th scope="row">2021</th><td>30p</td><td>16.6p</td><td>+13.4p</td><td>2021 annual average</td></tr>
+<tr data-year="2022"><th scope="row">2022</th><td>30p</td><td>18.1p</td><td>+11.9p</td><td>2022 annual average</td></tr>
+<tr data-year="2023"><th scope="row">2023</th><td>30p</td><td>19.4p</td><td>+10.6p</td><td>2023 annual average</td></tr>
+<tr data-year="2024"><th scope="row">2024</th><td>35p</td><td>19.9p</td><td>+15.1p</td><td>2024 annual average</td></tr>
+<tr data-year="2025"><th scope="row">2025</th><td>35p</td><td>20.6p</td><td>+14.4p</td><td>2025 annual average</td></tr>
+<tr data-year="2026"><th scope="row">2026</th><td>38.0p · checked average</td><td>21.4p</td><td>+16.6p</td><td>August 2026</td></tr>
+<!-- PRICE_ROWS_END --></tbody></table></div></details>
+      </section>
 
-        <!-- Right Column: Details Card -->
-        <div class="lg:col-span-1 h-auto lg:sticky lg:top-32">
-          <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-cadbury/10 transition-all duration-300 hover:shadow-2xl h-full flex flex-col">
-            
-            <!-- Card Header -->
-            <div id="details-header-bg" class="p-6 bg-cadbury-light text-white relative overflow-hidden transition-colors duration-300">
-              <div class="absolute -right-10 -top-10 opacity-20 transform rotate-12">
-                   <svg width="150" height="150" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
-              </div>
-              
-              <h2 id="details-year" class="text-4xl font-display font-bold mb-1">2026</h2>
-              <div class="flex items-baseline gap-2">
-                  <span id="details-price" class="text-6xl font-bold tracking-tighter">35p</span>
-                  <span id="details-golden-badge" class="hidden bg-yellow-400 text-red-900 text-xs font-bold px-2 py-1 rounded-full uppercase tracking-widest shadow-sm">The Golden Era</span>
-              </div>
+        <div class="dashboard-sidebar">
+          <section id="commodity-index" class="commodity-panel" aria-labelledby="commodity-title">
+<!-- COMMODITY_INDEX_START -->
+<div class="commodity-heading"><p class="eyebrow">The pecking order</p><h2 id="commodity-title">Commodity Index<span class="brand-dot">.</span></h2><p>Same weight. Questionable priorities.</p></div>
+    <p class="commodity-basis">September 2026 average · 3 supermarkets · 38p</p>
+    <div id="weight-comparison" aria-live="polite"><table class="commodity-table"><caption class="sr-only">Commodity comparisons, highest price first. Freddo uses the average of 3 comparable supermarket prices in the September 2026 snapshot. The priceless row is a joke, outside the numeric ranking.</caption><thead><tr><th scope="col">Item</th><th scope="col">£ / kg</th></tr></thead><tbody><tr class="commodity-joke"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🏆</span><span>My father’s approval<small>Still waiting.</small></span></span></th><td>Priceless</td></tr><tr class="" data-commodity="lobster"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🦞</span><span><span class="commodity-rank">1.</span> Lobster<small>Whole, shell-on · offer</small></span></span></th><td>£26.72</td></tr><tr class="commodity-freddo" data-commodity="freddo"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🐸</span><span><span class="commodity-rank">2.</span> Freddo<small>3-shop average · 38p / 18g</small></span></span></th><td>£21.11</td></tr><tr class="" data-commodity="dairy_milk"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🍫</span><span><span class="commodity-rank">3.</span> Cadbury Dairy Milk<small>110g bar · Tesco</small></span></span></th><td>£16.82</td></tr><tr class="" data-commodity="lithium"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🔋</span><span><span class="commodity-rank">4.</span> Lithium<small>Commodity quote</small></span></span></th><td>£15.01</td></tr><tr class="" data-commodity="copper"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🧵</span><span><span class="commodity-rank">5.</span> Copper<small>Bright wire · scrap</small></span></span></th><td>£8.40</td></tr></tbody></table>
+    <div class="commodity-verdict"><p>Pricier than lithium. Still cheaper than lobster.</p><small>About 2.5× the price of scrap copper by weight.</small></div>
+    <details class="weight-method"><summary>Show the maths and sources</summary><p>One eligible standard 18g single-bar price per supermarket in this snapshot: 45p + 35p + 34p. Their unweighted average is 38.00p; 38.00p ÷ 18g × 10 = £21.11 per kg. Calculations use the unrounded average. <a href="https://www.sainsburys.co.uk/groceries/product/cadbury-dairy-milk-freddo-chocolate-bar-18g" target="_blank" rel="noopener noreferrer">Sainsbury’s <span aria-hidden="true">↗</span></a> (checked <time datetime="2026-09-16T10:54:00Z">September 2026</time>); <a href="https://www.tesco.com/shop/en-GB/products/275341411" target="_blank" rel="noopener noreferrer">Tesco <span aria-hidden="true">↗</span></a> (checked <time datetime="2026-09-16T10:57:00Z">September 2026</time>); <a href="https://www.asda.com/groceries/product/5803656" target="_blank" rel="noopener noreferrer">ASDA <span aria-hidden="true">↗</span></a> (checked <time datetime="2026-09-16T10:56:00Z">September 2026</time>). Multipacks, offers and prices outside the snapshot window are excluded.</p><p>Whole cooked lobster reference: <a href="https://www.waitrose.com/ecom/products/canadian-whole-cooked-lobster/596893-312313-312314?pp=1" target="_blank" rel="noopener noreferrer">Waitrose <span aria-hidden="true">↗</span></a>, checked September 2026. Waitrose&#39;s displayed unit price for its frozen Canadian whole cooked lobster, 350g, on offer at £9.35 (was £12.50). Includes shell; not the price of edible meat alone. We use the retailer&#39;s stated £26.72/kg, which differs slightly from dividing the rounded pack price by its weight. Delivery is excluded. This offer was checked within 48 hours of the snapshot cut-off; current prices may differ.</p><p>Cadbury Dairy Milk 110g reference: <a href="https://www.tesco.com/shop/en-GB/products/284117451" target="_blank" rel="noopener noreferrer">Tesco <span aria-hidden="true">↗</span></a>, checked September 2026. Tesco&#39;s public standard price was £1.85 for a 110g bar, with a displayed unit price of £16.82/kg. The separate £1.50 Clubcard offer is excluded. Online prices may vary by location. It was checked within 48 hours of the snapshot cut-off; current prices may differ.</p><p>Lithium reference: <a href="https://www.dailymetalprice.com/metalprices.php?c=li&amp;d=20&amp;u=kg&amp;x=GBP" target="_blank" rel="noopener noreferrer">Daily Metal Price <span aria-hidden="true">↗</span></a>, checked September 2026. Published GBP quote for 15 September 2026. The provider tracks lithium carbonate, not pure lithium metal. This is a commodity reference, not a retail purchase price. The earlier £15.31 quote was dated 14 September. <a href="https://www.dailymetalprice.com/lithium.html" target="_blank" rel="noopener noreferrer">What this quote measures <span aria-hidden="true">↗</span></a>.</p><p>Bright copper wire (scrap) reference: <a href="https://www.alveronix.co.uk/" target="_blank" rel="noopener noreferrer">Alveronix <span aria-hidden="true">↗</span></a>, checked September 2026. Indicative scrap buying rate, subject to grading. A retail chocolate price versus a scrap buying price, for perspective; not a copper retail or exchange quote.</p><p>These are dated reference prices for perspective, not live feeds or interchangeable products. Eligibility was checked at the snapshot cut-off: commodity quotes within 30 days, retail prices and offers within 48 hours. Current prices may differ.</p></details></div>
+<!-- COMMODITY_INDEX_END -->
+          </section>
+        <aside class="year-comment" aria-label="Reactions">
+          <div class="year-comment-body" data-nosnippet>
+            <h3 class="reactions-title">Reactions</h3>
+            <div class="year-comment-quote">
+              <blockquote id="details-quote">“35p? Christ.”</blockquote>
+              <p class="quote-author">— Barbara, Wakefield</p>
             </div>
-
-            <!-- Card Body -->
-            <div class="p-6 flex-grow flex flex-col gap-6 relative">
-              
-              <!-- AI Commentary / Quote Area -->
-              <div class="bg-purple-50 rounded-xl p-8 border border-purple-100 flex-grow relative min-h-[200px] flex flex-col justify-center items-center text-center">
-                  
-                  <!-- Loading State -->
-                  <div id="details-loading" class="hidden flex-col items-center justify-center text-cadbury gap-2">
-                      <div class="animate-spin text-2xl">🐸</div>
-                      <span class="text-sm font-semibold animate-pulse">Polling the public...</span>
-                  </div>
-
-                  <!-- Content State -->
-                  <div id="details-content" class="animate-fade-in-up">
-                      <p id="details-quote" class="text-xl md:text-2xl text-cadbury font-display font-bold mb-6 leading-snug">
-                          "35p? Christ"
-                      </p>
-                      <div class="inline-block bg-white px-4 py-2 rounded-full shadow-sm border border-purple-100">
-                          <p id="details-author" class="text-gray-600 font-medium text-sm">
-                               — Barbara, Wakefield
-                          </p>
-                      </div>
-                  </div>
-              </div>
-
-              <!-- Inflation Context -->
-              <div class="text-center border-t border-gray-100 pt-4">
-                  <p id="details-context" class="text-xs text-gray-400 uppercase tracking-widest font-bold">
-                      Present Day
-                  </p>
-              </div>
-
-            </div>
+            <a id="have-your-say" class="comment-submit reaction-button" href="#contact">Have your say <span aria-hidden="true">↗</span></a>
           </div>
+        </aside>
         </div>
 
+      <section class="comparison" aria-labelledby="comparison-title">
+        <div class="section-heading comparison-heading">
+          <h2 id="comparison-title">A Freddo in <span id="comparison-year">2026</span></h2>
+        </div>
+        <div class="comparison-grid" id="comparison-values" aria-live="polite" aria-atomic="true">
+          <article class="price-card recorded-card">
+            <div class="card-top"><h3 id="recorded-price-label">Checked average</h3><span class="card-icon" aria-hidden="true">↗</span></div>
+            <p class="big-number" id="recorded-price">38<span>p</span></p>
+            <p class="card-note" id="recorded-price-note">3 supermarkets · September 2026 snapshot</p>
+          </article>
+          <article class="price-card inflation-card">
+            <div class="card-top"><h3>If it followed inflation</h3><span class="card-icon" aria-hidden="true">≈</span></div>
+            <p class="big-number" id="inflation-price">21.4<span>p</span></p>
+            <p class="card-note" id="inflation-period">10p in 1995 · CPI: August 2026</p>
+          </article>
+          <article class="price-card difference-card">
+            <div class="card-top"><h3>Difference</h3><span class="card-icon" aria-hidden="true">!</span></div>
+            <p class="big-number" id="difference-price">+16.6<span>p</span></p>
+            <p class="card-note" id="difference-description">78% above the inflation-only price</p>
+          </article>
+        </div>
+      </section>
       </div>
+
+      <section id="methodology" class="methodology" aria-labelledby="methodology-title">
+        <div class="methodology-copy"><p class="eyebrow">The method behind the madness</p><h2 id="methodology-title">Same frog. Two very different prices.</h2><p>We start with a 10p Freddo in 1995 and ask what it would cost if its price had risen in line with the UK Consumer Prices Index (CPI).</p><p class="formula">10p × comparison CPI ÷ 1995 CPI</p><p>Completed years use annual average CPI. For <span id="open-year">2026</span>, we use <span id="latest-period">August 2026</span>, the latest monthly figure in our saved snapshot—not a full-year average. Calculations use unrounded values; displayed comparisons are rounded to 0.1p.</p><p>Historical Freddo prices are approximate. The inflation line shows what a 10p Freddo would cost if its price had followed UK inflation.</p><a id="source-link" class="source-link" href="https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/d7bt/mm23" target="_blank" rel="noopener noreferrer">Source: ONS CPI all items, D7BT <span aria-hidden="true">↗</span></a><p class="snapshot-note" id="snapshot-date">CPI snapshot: September 2026 · Updated manually</p></div>
+
+      </section>
+
+      <p id="leaderboard-load-status" class="leaderboard-note" role="status" hidden>Unable to refresh prices. The table below is a saved snapshot; check its observation dates and source links.</p>
+      <section id="leaderboard" class="leaderboard-section" aria-labelledby="leaderboard-title">
+        <!-- LEADERBOARD_START -->
+<div class="leaderboard-heading"><div><p class="eyebrow">The supermarket price watch</p><h2 id="leaderboard-title">The leaderboard of shame</h2><p>Same 18g frog. Different levels of cheek.</p></div><span class="preview-badge">September 2026 snapshot</span></div>
+    <p class="leaderboard-note">Saved September 2026 page observations. This static snapshot does not update automatically. Only standard single-bar prices checked within 48 hours of the snapshot were ranked.</p>
+    <div class="leaderboard-table-wrap" tabindex="0" role="region" aria-label="Supermarket single-bar prices"><table class="leaderboard-table"><caption>Highest price first · original milk-chocolate Freddo, 18g</caption><thead><tr><th scope="col">Rank / supermarket</th><th scope="col">One Freddo</th><th scope="col">Per 100g</th><th scope="col">Checked</th></tr></thead><tbody><tr><th scope="row"><span class="shame-rank">1</span><span class="retailer-identity"><img class="leaderboard-logo" src="./assets/retailers/sainsburys.png" alt="" width="68" height="30" /><a href="https://www.sainsburys.co.uk/groceries/product/cadbury-dairy-milk-freddo-chocolate-bar-18g" target="_blank" rel="noopener noreferrer">Sainsbury’s <span aria-hidden="true">↗</span></a></span><small class="shame-label">Top of the shame table</small><small class="mobile-checked">Checked <time datetime="2026-09-16T10:54:00Z">September 2026</time></small></th><td class="retailer-price">45p<small>First observation</small></td><td>£2.50</td><td><time datetime="2026-09-16T10:54:00Z">September 2026</time></td></tr><tr><th scope="row"><span class="shame-rank">2</span><span class="retailer-identity"><img class="leaderboard-logo" src="./assets/retailers/tesco.svg" alt="" width="68" height="30" /><a href="https://www.tesco.com/shop/en-GB/products/275341411" target="_blank" rel="noopener noreferrer">Tesco <span aria-hidden="true">↗</span></a></span><small class="mobile-checked">Checked <time datetime="2026-09-16T10:57:00Z">September 2026</time></small></th><td class="retailer-price">35p<small>First observation</small></td><td>£1.94</td><td><time datetime="2026-09-16T10:57:00Z">September 2026</time></td></tr><tr><th scope="row"><span class="shame-rank">3</span><span class="retailer-identity"><img class="leaderboard-logo" src="./assets/retailers/asda.avif" alt="" width="68" height="30" /><a href="https://www.asda.com/groceries/product/5803656" target="_blank" rel="noopener noreferrer">ASDA <span aria-hidden="true">↗</span></a></span><small class="mobile-checked">Checked <time datetime="2026-09-16T10:56:00Z">September 2026</time></small></th><td class="retailer-price">34p<small>First observation</small></td><td>£1.89</td><td><time datetime="2026-09-16T10:56:00Z">September 2026</time></td></tr></tbody></table></div>
+    <div class="unranked-prices"><p><strong><span class="retailer-identity"><img class="leaderboard-logo" src="./assets/retailers/morrisons.png" alt="" width="68" height="30" /><a href="https://groceries.morrisons.com/products/cadbury-dairy-milk-freddo-chocolate-bar-4-pack-multipack/115225381" target="_blank" rel="noopener noreferrer">Morrisons <span aria-hidden="true">↗</span></a></span></strong> <span>Multipack only · not ranked</span><small>Last observed: £1.00 for 4 × 18g · 25p per bar · £1.39 per 100g · promotional price · <time datetime="2026-09-16T10:58:00Z">September 2026</time></small></p></div>
+    <p class="leaderboard-note">Public online prices, signed out, without a delivery postcode. In-store and local prices may differ. Multipacks and loyalty offers do not enter the single-bar ranking. The 2026 chart point uses the eligible-shop average; earlier points are approximate historical records.</p>
+
+<!-- LEADERBOARD_END -->
+      </section>
+
+      <section id="contact" class="contact-section" aria-labelledby="contact-title">
+        <div class="contact-copy"><p class="eyebrow">The nation has thoughts</p><h2 id="contact-title">Have your say<span class="brand-dot">.</span></h2><p>Spotted a Freddo price, remember the 10p days, or have a question? We’d love to hear it.</p><p class="contact-help">This opens a draft in your email app. Check it and press Send there; the website does not store your message.</p></div>
+        <form id="contact-form" action="mailto:thefreddoindex@gmail.com" method="post" enctype="text/plain">
+          <label for="contact-name">Your name <span>(optional)</span></label>
+          <input id="contact-name" name="name" maxlength="80" autocomplete="name" placeholder="Barbara from Wakefield" />
+          <label for="contact-message">Your message</label>
+          <textarea id="contact-message" name="message" required minlength="3" maxlength="1000" rows="5" placeholder="35p? Christ." aria-describedby="contact-guidance"></textarea>
+          <p id="contact-guidance" class="contact-help">Up to 1,000 characters. Your email app will address the message to thefreddoindex@gmail.com.</p>
+          <button class="comment-submit" type="submit">Open email draft <span aria-hidden="true">↗</span></button>
+          <p id="contact-status" class="contact-help" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="summary-strip" aria-label="Price history highlights"><div><strong id="growth-stat">250%</strong><span id="growth-label">Saved historical series growth since 1995</span></div><div><strong id="lowest-stat">10p</strong><span>The good old days</span></div><div><strong id="highest-stat">35p</strong><span>Highest historical record</span></div></section>
+      <noscript><p class="noscript-note" id="noscript-comparison">The comparison above uses a saved 3-supermarket price snapshot; “View the numbers” contains the full history.</p></noscript>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-cadbury-dark text-white py-8 mt-12">
-      <div class="container mx-auto px-4 text-center opacity-60 text-sm">
-        <p>&copy; <span id="footer-year"></span> The Freddo Index. Not affiliated with Cadbury.</p>
-        <p class="mt-2 text-xs">Data approximated from user submissions and hysterical memories of simpler times.</p>
-      </div>
-    </footer>
-
-    <!-- Inline Script for Logic -->
-    <script>
-      // Data
-      const FREDDO_DATA = [
-        { year: 1995, price: 10, isGoldenEra: true },
-        { year: 1996, price: 10, isGoldenEra: true },
-        { year: 1997, price: 10, isGoldenEra: true },
-        { year: 1998, price: 10, isGoldenEra: true },
-        { year: 1999, price: 10, isGoldenEra: true },
-        { year: 2000, price: 10, isGoldenEra: true },
-        { year: 2001, price: 10, isGoldenEra: true },
-        { year: 2002, price: 10, isGoldenEra: true },
-        { year: 2003, price: 10, isGoldenEra: true },
-        { year: 2004, price: 10, isGoldenEra: true },
-        { year: 2005, price: 10, isGoldenEra: true },
-        { year: 2006, price: 10, isGoldenEra: true },
-        { year: 2007, price: 15, isGoldenEra: false },
-        { year: 2008, price: 15, isGoldenEra: false },
-        { year: 2009, price: 15, isGoldenEra: false },
-        { year: 2010, price: 15, isGoldenEra: false },
-        { year: 2011, price: 17, isGoldenEra: false },
-        { year: 2012, price: 20, isGoldenEra: false },
-        { year: 2013, price: 20, isGoldenEra: false },
-        { year: 2014, price: 20, isGoldenEra: false },
-        { year: 2015, price: 25, isGoldenEra: false },
-        { year: 2016, price: 25, isGoldenEra: false },
-        { year: 2017, price: 30, isGoldenEra: false },
-        { year: 2018, price: 25, isGoldenEra: false },
-        { year: 2019, price: 30, isGoldenEra: false },
-        { year: 2020, price: 30, isGoldenEra: false },
-        { year: 2021, price: 30, isGoldenEra: false },
-        { year: 2022, price: 30, isGoldenEra: false },
-        { year: 2023, price: 30, isGoldenEra: false },
-        { year: 2024, price: 35, isGoldenEra: false },
-        { year: 2025, price: 35, isGoldenEra: false },
-        { year: 2026, price: 35, isGoldenEra: false },
-      ];
-
-      // Constants
-      const COLORS = {
-        golden: '#D8B4FE',   // Light Purple
-        inflation: '#8B5CF6', // Vivid Purple
-        hover: '#6D28D9',     // Deep Purple
-        selected: '#330072'   // Cadbury Purple
-      };
-
-      // State
-      let currentState = {
-        selectedYear: FREDDO_DATA[FREDDO_DATA.length - 1].year,
-        price: FREDDO_DATA[FREDDO_DATA.length - 1].price,
-        isGoldenEra: FREDDO_DATA[FREDDO_DATA.length - 1].isGoldenEra
-      };
-
-      let chartInstance = null;
-      let els = {};
-
-      document.addEventListener('DOMContentLoaded', () => {
-        // Initialize DOM Elements
-        els = {
-          headerPrice: document.getElementById('header-current-price'),
-          detailsYear: document.getElementById('details-year'),
-          detailsPrice: document.getElementById('details-price'),
-          detailsHeaderBg: document.getElementById('details-header-bg'),
-          detailsGoldenBadge: document.getElementById('details-golden-badge'),
-          detailsLoading: document.getElementById('details-loading'),
-          detailsContent: document.getElementById('details-content'),
-          detailsQuote: document.getElementById('details-quote'),
-          detailsAuthor: document.getElementById('details-author'),
-          detailsContext: document.getElementById('details-context'),
-          footerYear: document.getElementById('footer-year'),
-          canvas: document.getElementById('freddoChart')
-        };
-
-        if (els.footerYear) els.footerYear.textContent = new Date().getFullYear().toString();
-        
-        initChart();
-        updateUI();
-        // No fetch needed, hardcoded content is default
-      });
-
-      function initChart() {
-        if (!els.canvas) return;
-
-        const ctx = els.canvas.getContext('2d');
-        if (!ctx) return;
-
-        chartInstance = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: FREDDO_DATA.map(d => d.year),
-            datasets: [{
-              data: FREDDO_DATA.map(d => d.price),
-              borderRadius: 4,
-              backgroundColor: getBackgroundColors(currentState.selectedYear),
-              hoverBackgroundColor: COLORS.hover,
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            onClick: (event, elements) => {
-              if (elements.length > 0) {
-                const index = elements[0].index;
-                const selectedData = FREDDO_DATA[index];
-                handleYearSelect(selectedData);
-              }
-            },
-            onHover: (event, elements) => {
-               if(event.native && event.native.target) {
-                  (event.native.target).style.cursor = elements.length ? 'pointer' : 'default';
-               }
-            },
-            plugins: {
-              legend: { display: false },
-              tooltip: {
-                backgroundColor: '#FFF',
-                titleColor: '#330072',
-                bodyColor: '#4CBB17',
-                bodyFont: { size: 14, weight: 'bold' },
-                titleFont: { size: 14, weight: 'bold', family: 'Fredoka' },
-                borderColor: '#330072',
-                borderWidth: 1,
-                displayColors: false,
-                padding: 12,
-                cornerRadius: 8,
-                callbacks: {
-                  label: (context) => `${context.raw}p`
-                }
-              }
-            },
-            scales: {
-              x: {
-                grid: { display: false },
-                ticks: { font: { size: 12, family: 'Inter' }, color: '#666' }
-              },
-              y: {
-                border: { display: false },
-                grid: { color: '#f0f0f0' },
-                ticks: { 
-                    stepSize: 10,
-                    font: { size: 12, family: 'Inter' }, 
-                    color: '#666'
-                },
-                min: 0,
-                max: 40
-              }
-            }
-          }
-        });
-      }
-
-      function getBackgroundColors(selectedYear) {
-        return FREDDO_DATA.map(d => {
-          if (d.year === selectedYear) return COLORS.selected;
-          return d.isGoldenEra ? COLORS.golden : COLORS.inflation;
-        });
-      }
-
-      function handleYearSelect(data) {
-        // Update State
-        currentState.selectedYear = data.year;
-        currentState.price = data.price;
-        currentState.isGoldenEra = data.isGoldenEra;
-
-        // Update Chart Colors
-        if (chartInstance) {
-          chartInstance.data.datasets[0].backgroundColor = getBackgroundColors(currentState.selectedYear);
-          chartInstance.update();
-        }
-
-        // Update UI immediate
-        updateUI();
-      }
-
-      function updateUI() {
-        if (!els.detailsYear) return;
-
-        // Update Right Panel Static Data
-        els.detailsYear.textContent = currentState.selectedYear.toString();
-        if(els.detailsPrice) els.detailsPrice.textContent = `${currentState.price}p`;
-
-        // Golden Era Styling
-        if (currentState.isGoldenEra) {
-          els.detailsHeaderBg?.classList.remove('bg-cadbury-light');
-          els.detailsHeaderBg?.classList.add('bg-freddo-red');
-          els.detailsGoldenBadge?.classList.remove('hidden');
-        } else {
-          els.detailsHeaderBg?.classList.add('bg-cadbury-light');
-          els.detailsHeaderBg?.classList.remove('bg-freddo-red');
-          els.detailsGoldenBadge?.classList.add('hidden');
-        }
-
-        // Context Text
-        if(els.detailsContext) {
-            const diff = FREDDO_DATA[FREDDO_DATA.length - 1].year - currentState.selectedYear;
-            els.detailsContext.textContent = diff === 0 ? "Present Day" : `${diff} years ago`;
-        }
-      }
-    </script>
+    <footer class="site-footer"><div class="shell footer-inner"><p>🐸 <strong>The Original Freddo Index</strong><span>Tracking inflation, one frog at a time.</span></p><p>© <span id="footer-year">2026</span> · Not affiliated with Cadbury. · <a href="#contact">Contact</a><span>Data, nostalgia and a healthy sense of outrage.</span></p></div></footer>
   </body>
 </html>
