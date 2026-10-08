@@ -45,6 +45,6 @@ test('the published page uses the dated snapshot and static email contact', () =
   assert.match(html, /id="contact-form" action="mailto:thefreddoindex@gmail\.com"/);
   assert.match(html, /id="have-your-say"[^>]+href="#contact"/);
   assert.doesNotMatch(html, /src="\.\/comments\.js"/);
-  assert.match(html, /September 2026 snapshot/);
+  assert.match(html, /October 2026 snapshot/);
   assert.doesNotMatch(html, />16 Sept(?:ember)? 2026</);
 });

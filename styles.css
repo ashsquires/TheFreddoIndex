@@ -1140,3 +1140,8 @@ tr[data-selected=true] {
   .leaderboard-table .shame-rank { width: 19px; height: 19px; margin-right: 5px; font-size: 10px; }
   .leaderboard-table .shame-label { margin-left: 0; }
 }
+
+.year-comment-quote + .year-comment-quote { margin-top: 14px; }
+.year-comment-quote.reaction-long { min-height: 0; padding: 22px 16px; gap: 16px; }
+.reaction-long blockquote { font-size: 20px; }
+.reaction-context { color: var(--muted); font-size: 10px; line-height: 1.5; text-align: center; }

@@ -6,12 +6,27 @@
 - Public, signed-out online observations with no postcode selected. This is not a claim about every branch or in-store availability.
 - Separate multipack/offer observations outside the ranking; equal ranks for equal prices.
 - Pence stored as integers; pack count and grams stored separately. `GBP per 100g = price in pence / (bar grams × pack count)`. `GBP per kg = GBP per 100g × 10`. Round only for display.
-- Expandable Commodity Index beside the chart, with icons, descending prices, equal ranks for ties, a highlighted Freddo row and fixed £/kg units. Freddo uses the equal-shop average of comparable single-bar prices in the saved September 2026 snapshot; Reactions appears underneath. Source, month, basis and calculations appear under “Show the maths and sources”.
+- Expandable Commodity Index beside the chart, with icons, descending prices, equal ranks for ties, a highlighted Freddo row and fixed £/kg units. Freddo uses the equal-shop average of comparable single-bar prices in the saved October 2026 snapshot; Reactions appears underneath. Source, month, basis and calculations appear under “Show the maths and sources”.
 - Snapshot cut-off: only available standard single bars checked within 48 hours of `snapshotAt` enter the ranking. Future timestamps are excluded. Commodity references must have been checked within 30 days of that cut-off (including publication date when known); retail references and offers within 48 hours. The static page keeps this dated snapshot after publication and says it does not update automatically. Exact timestamps remain in data and HTML `datetime` attributes even though visible dates show only the month.
 - Append-only observation import with schema checks, fixed source URLs, idempotence and conflicting-timestamp rejection. This is a trusted local operator tool, not a public ingestion endpoint or source-authentication system.
 - Read-only fetch diagnostic with fixed URLs, timeouts and size limits. Reports go to ignored `reports.local/`. Fetch failure never changes an observation or refreshes its successful-check timestamp.
 - The saved approximate price history and CPI remain unchanged. The 2026 graph point and inflation comparison overlay the equal-shop average of eligible single-bar quotes at the snapshot cut-off; when none qualify, they fall back to the saved 35p historical point. The history highlight statistics still describe the saved series. The earlier statement that all four retailers were checked at 35p has been removed.
 - No schedule, hosted database, paid browser service or production publication has been activated.
+
+## Source results: October 2026
+
+Rechecked in the browser on 8 October 2026, signed out with no delivery postcode. All six supermarket product pages exposed enabled add buttons. September Freddo observations are retained; four October observations are appended. Snapshot cut-off: 8 October 2026, 14:35 UTC.
+
+| Retailer | Current observation | Treatment |
+| --- | --- | --- |
+| Sainsbury’s | 45p / 18g single, £25/kg | Standard; unchanged |
+| Tesco | 35p / 18g single, £19.44/kg | Standard; unchanged |
+| ASDA | 32p / 18g single, was 34p; Rollback, £17.78/kg | Promotion; shown separately, excluded from average |
+| Morrisons | £1 / four 18g bars, was £1.50; offer through 13 October | Multipack promotion; excluded |
+
+The two eligible standard prices average **40p**, or **£22.22/kg**, compared with the earlier three-shop 38p average. The change in average reflects ASDA’s promotional exclusion, not a rise at Tesco or Sainsbury’s. With the unchanged saved CPI benchmark, the comparison is 87% above inflation (18.6p difference). Matty’s supplied 78% reaction is labelled as referring to the September comparison.
+
+Also rechecked Tesco Dairy Milk 110g (£1.85 / £16.82 per kg) and Waitrose whole cooked lobster 350g (£9.35 reduced to clear / £26.72 per kg); both unchanged. Copper and lithium retain their explicitly dated September references, which remain inside the 30-day eligibility window. CPI and historical price records were not changed.
 
 ## Source results: September 2026
 

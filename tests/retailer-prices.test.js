@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { priceByWeight, pounds, getLeaderboard, getCommodityRows, copperComparison, benchmarkComparison, validateObservation, mergeObservations, MAX_PRICE_AGE_MS } from '../retailer-data.js';
 import { renderLeaderboard, renderWeightComparison, renderCommodityIndex } from '../leaderboard-render.js';
 
-const snapshot = JSON.parse(await readFile(new URL('../data/retailer-prices.json', import.meta.url)));
+const snapshot = JSON.parse(await readFile(new URL('./fixtures/retailer-prices-september-2026.json', import.meta.url)));
 const now = Date.parse('2026-09-16T14:00:00Z');
 const single = snapshot.observations.find(row => row.retailerId === 'sainsburys');
 const isolated = observations => ({ ...snapshot, observations });
@@ -138,4 +138,16 @@ test('commodity index averages eligible shops, expands from data and ranks using
   assert.equal(getCommodityRows(withoutHighest, now).averagePence, 34.5);
   assert.equal(getCommodityRows(snapshot, now + 3 * 86400000).rows.length, 5);
   assert.equal(getCommodityRows({ ...snapshot, mode: 'live' }, now + 3 * 86400000).rows.length, 0);
+});
+
+
+test('October refresh preserves history and excludes the new ASDA promotion from the average', async () => {
+  const current = JSON.parse(await readFile(new URL('../data/retailer-prices.json', import.meta.url)));
+  assert.deepEqual(current.observations.slice(0, 4), snapshot.observations);
+  const { ranked, unranked } = getLeaderboard(current);
+  assert.deepEqual(ranked.map(row => [row.id, row.observation.pricePence, row.changePence]), [['sainsburys', 45, 0], ['tesco', 35, 0]]);
+  const asda = unranked.find(row => row.id === 'asda');
+  assert.equal(asda.observation.pricePence, 32);
+  assert.equal(asda.reason, 'Offer price · not ranked');
+  assert.equal(getCommodityRows(current).averagePence, 40);
 });
