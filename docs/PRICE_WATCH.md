@@ -82,3 +82,9 @@ The three eligible shops average 38p per 18g bar, or £21.11/kg (using unrounded
 ## Verification in this change
 
 `npm test`: 35 tests passed, including 11 price-watch tests covering units, ranking, ties, freshness, exclusions, historical observations, invalid input, copper calculation, reference expiry, comparison direction, ten-item extension, ranking ties, automatic average selection and import behavior. Production build and dry-run import passed. Browser checks cover rendering, fixed units and independence from the historical year control. Live fetch diagnostics reported no unattended success, so daily collection is deliberately not claimed.
+
+## Reader-reported in-store evidence
+
+The separate `#in-store-reports` section follows the online leaderboard. On 8 October 2026 the owner reported an Asda Express single Freddo at 50p and supplied IMG_2845.HEIC. The photo visibly shows “Cadbury Freddo 18G”, “50P” and £27.78/kg; the store identity is supplied by the reporter, not established by visible signage. Branch not supplied. The published date is the report date, not a claimed photo capture date.
+
+The original HEIC was decoded with pillow-heif and exported as a metadata-free JPEG (1800px) and thumbnail (540px) in `assets/reports/`. Native details/summary reveals the thumbnail and caption; its link opens the larger photo. Both root hosting and the Vite build include the assets. This report does not enter retailer observations, ranking, ticker or the headline average.
