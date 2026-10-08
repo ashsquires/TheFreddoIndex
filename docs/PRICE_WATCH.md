@@ -24,7 +24,7 @@ Rechecked in the browser on 8 October 2026, signed out with no delivery postcode
 | ASDA | 32p / 18g single, was 34p; Rollback, £17.78/kg | Promotion; shown separately, excluded from average |
 | Morrisons | £1 / four 18g bars, was £1.50; offer through 13 October | Multipack promotion; excluded |
 
-The two eligible standard prices average **40p**, or **£22.22/kg**, compared with the earlier three-shop 38p average. The change in average reflects ASDA’s promotional exclusion, not a rise at Tesco or Sainsbury’s. With the unchanged saved CPI benchmark, the comparison is 87% above inflation (18.6p difference). Matty’s supplied 78% reaction is labelled as referring to the September comparison.
+The two eligible standard prices average **40p**, or **£22.22/kg**, compared with the earlier three-shop 38p average. The change in average reflects ASDA’s promotional exclusion, not a rise at Tesco or Sainsbury’s. With the unchanged saved CPI benchmark, the comparison is 87% above inflation (18.6p difference). Matty’s supplied 78% reaction is displayed verbatim without a comparison-date caption.
 
 Also rechecked Tesco Dairy Milk 110g (£1.85 / £16.82 per kg) and Waitrose whole cooked lobster 350g (£9.35 reduced to clear / £26.72 per kg); both unchanged. Copper and lithium retain their explicitly dated September references, which remain inside the 30-day eligibility window. CPI and historical price records were not changed.
 
