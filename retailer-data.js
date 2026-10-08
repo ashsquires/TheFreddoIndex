@@ -2,6 +2,7 @@
 export const MAX_PRICE_AGE_MS = 48 * 60 * 60 * 1000;
 export const MAX_REFERENCE_AGE_MS = 30 * 24 * 60 * 60 * 1000;
 export const RETAILERS = Object.freeze([
+  { id: 'asda-express', name: 'Asda Express', url: 'https://thefreddoindex.com/assets/reports/asda-express-freddo-50p.jpg', inStore: true },
   { id: 'sainsburys', name: 'Sainsbury’s', url: 'https://www.sainsburys.co.uk/groceries/product/cadbury-dairy-milk-freddo-chocolate-bar-18g' },
   { id: 'tesco', name: 'Tesco', url: 'https://www.tesco.com/shop/en-GB/products/275341411' },
   { id: 'asda', name: 'ASDA', url: 'https://www.asda.com/groceries/product/5803656' },
@@ -28,7 +29,7 @@ export function validateObservation(row) {
   if (row.pricePence > 10000) throw new Error('Price requires review');
   if (!['standard', 'promotion', 'loyalty'].includes(row.priceType)) throw new Error('Unknown price type');
   if (!['available', 'unavailable', 'unknown'].includes(row.availability)) throw new Error('Unknown availability');
-  if (!['browser-verified', 'structured-data'].includes(row.method)) throw new Error('Direct source verification is required');
+  if (!(retailer.inStore ? row.method === 'reader-reported' : ['browser-verified', 'structured-data'].includes(row.method))) throw new Error('Direct source verification is required');
   if (typeof row.evidence !== 'string' || row.evidence.length < 10 || row.evidence.length > 1000) throw new Error('A short product/price evidence excerpt is required');
   if (!/freddo/i.test(row.productName ?? '') || /caramel|friends|faces/i.test(row.productName)) throw new Error('Not the original Freddo');
   if (row.packCount === 1 && /multipack|\b\d+\s*(?:x|pack)\b/i.test(row.productName)) throw new Error('Multipack cannot be recorded as one bar');
@@ -68,7 +69,7 @@ export function evaluationTime(snapshot, now = Date.now()) {
 
 export function getLeaderboard(snapshot, now = Date.now()) {
   const asOf = evaluationTime(snapshot, now);
-  const current = RETAILERS.map(retailer => {
+  const current = RETAILERS.filter(retailer => !retailer.inStore || snapshot.observations.some(row => row.retailerId === retailer.id)).map(retailer => {
     const observations = snapshot.observations.filter(row => row.retailerId === retailer.id).map(validateObservation)
       .sort((a, b) => Date.parse(b.checkedAt) - Date.parse(a.checkedAt));
     const latest = observations[0];
@@ -76,11 +77,11 @@ export function getLeaderboard(snapshot, now = Date.now()) {
     if (latest) {
       if (!isFresh(latest.checkedAt, asOf)) reason = 'Needs a fresh check';
       else if (latest.packCount !== 1) reason = 'Multipack only · not ranked';
-      else if (latest.priceType !== 'standard') reason = 'Offer price · not ranked';
+      else if (latest.priceType === 'loyalty') reason = 'Loyalty offer · not ranked';
       else if (latest.availability !== 'available') reason = 'Availability unconfirmed · not ranked';
       else reason = null;
     }
-    const previous = observations.slice(1).find(row => row.packCount === 1 && row.priceType === 'standard' && row.availability === 'available');
+    const previous = observations.slice(1).find(row => row.packCount === 1 && row.priceType !== 'loyalty' && row.availability === 'available');
     return { ...retailer, observation: latest, reason, changePence: !reason && previous ? latest.pricePence - previous.pricePence : null };
   });
   const ranked = current.filter(row => !row.reason).sort((a, b) => b.observation.pricePence - a.observation.pricePence || a.name.localeCompare(b.name));
@@ -104,7 +105,7 @@ export function copperComparison(observation, benchmark, now = Date.now()) {
   return result && { ...result, copperPer100g: result.referencePer100g };
 }
 
-// One equally weighted, comparable single-bar quote per retailer; no multipack or offer substitutions.
+// One equally weighted, comparable single-bar quote per retailer; public offers and reported in-store prices included; multipacks and loyalty-only offers excluded.
 export function getCommodityRows(snapshot, now = Date.now()) {
   const asOf = evaluationTime(snapshot, now);
   const { ranked } = getLeaderboard(snapshot, asOf);

@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "mode": "snapshot",
-  "snapshotAt": "2026-10-08T14:35:00Z",
+  "snapshotAt": "2026-10-08T16:55:00Z",
   "displayPeriod": "October 2026",
-  "scope": "Public online prices, signed out, without a delivery postcode. In-store and local prices may differ.",
+  "scope": "Public online prices without a delivery postcode, plus a reader-reported Asda Express in-store price. Branch and local prices may differ.",
   "observations": [
     {
       "retailerId": "sainsburys",
@@ -127,6 +127,23 @@
       "method": "browser-verified",
       "evidence": "Freddo multipack: four 18g bars for £1.00, previously £1.50; £13.89/kg. Offer ends 13 October 2026. Add-to-basket enabled.",
       "note": "Verified multipack listing; excluded from single-bar comparisons."
+    },
+    {
+      "retailerId": "asda-express",
+      "sourceUrl": "https://thefreddoindex.com/assets/reports/asda-express-freddo-50p.jpg",
+      "productName": "Cadbury Freddo 18G",
+      "pricePence": 50,
+      "currency": "GBP",
+      "weightGrams": 18,
+      "packCount": 1,
+      "variant": "milk-chocolate",
+      "priceType": "standard",
+      "availability": "available",
+      "checkedAt": "2026-10-08T16:55:00Z",
+      "reportedDate": "2026-10-08",
+      "method": "reader-reported",
+      "evidence": "Reader-supplied photo shows a Freddo display and Cadbury Freddo 18G shelf label at 50P. Store identified as Asda Express by the reporter.",
+      "note": "Branch not supplied. Reported 8 October 2026; date does not assert when the photo was taken."
     }
   ],
   "benchmarks": {

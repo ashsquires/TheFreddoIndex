@@ -1,6 +1,12 @@
 # Supermarket price watch — static snapshot and implementation plan
 
-## Implemented locally
+## Current methodology (8 October 2026)
+
+The ranking and equal-retailer average include public single-bar offers and reader-reported in-store prices. Asda Express is a distinct retailer entry at 50p, with an expandable photo in its leaderboard row instead of a retailer website link. Together with Sainsbury’s 45p, Tesco 35p and ASDA’s 32p Rollback, the average is **40.5p / £22.50 per kg**. Multipacks and loyalty-only offers remain excluded. Source type and check/report dates remain visible. Earlier collection notes below record the previous policy.
+
+The graph and comparison cards share one column, so sidebar height cannot create a gap between them.
+
+## Implementation history
 
 - Source-linked, dated leaderboard of standard-price original milk-chocolate 18g single bars.
 - Public, signed-out online observations with no postcode selected. This is not a claim about every branch or in-store availability.
@@ -85,6 +91,6 @@ The three eligible shops average 38p per 18g bar, or £21.11/kg (using unrounded
 
 ## Reader-reported in-store evidence
 
-The separate `#in-store-reports` section follows the online leaderboard. On 8 October 2026 the owner reported an Asda Express single Freddo at 50p and supplied IMG_2845.HEIC. The photo visibly shows “Cadbury Freddo 18G”, “50P” and £27.78/kg; the store identity is supplied by the reporter, not established by visible signage. Branch not supplied. The published date is the report date, not a claimed photo capture date.
+The report is now integrated into the leaderboard row; the standalone section was removed. On 8 October 2026 the owner reported an Asda Express single Freddo at 50p and supplied IMG_2845.HEIC. The photo visibly shows “Cadbury Freddo 18G”, “50P” and £27.78/kg; the store identity is supplied by the reporter, not established by visible signage. Branch not supplied. The published date is the report date, not a claimed photo capture date.
 
-The original HEIC was decoded with pillow-heif and exported as a metadata-free JPEG (1800px) and thumbnail (540px) in `assets/reports/`. Native details/summary reveals the thumbnail and caption; its link opens the larger photo. Both root hosting and the Vite build include the assets. This report does not enter retailer observations, ranking, ticker or the headline average.
+The original HEIC was decoded with pillow-heif and exported as a metadata-free JPEG (1800px) and thumbnail (540px) in `assets/reports/`. Native details/summary reveals the thumbnail and caption; its link opens the larger photo. Both root hosting and the Vite build include the assets. At the owner’s request, this report now enters retailer observations, ranking, ticker and the headline average. Its source URL points to the evidence photo.

@@ -141,13 +141,20 @@ test('commodity index averages eligible shops, expands from data and ranks using
 });
 
 
-test('October refresh preserves history and excludes the new ASDA promotion from the average', async () => {
+test('October ranking includes Asda Express evidence and the public ASDA offer in the average', async () => {
   const current = JSON.parse(await readFile(new URL('../data/retailer-prices.json', import.meta.url)));
   assert.deepEqual(current.observations.slice(0, 4), snapshot.observations);
   const { ranked, unranked } = getLeaderboard(current);
-  assert.deepEqual(ranked.map(row => [row.id, row.observation.pricePence, row.changePence]), [['sainsburys', 45, 0], ['tesco', 35, 0]]);
-  const asda = unranked.find(row => row.id === 'asda');
-  assert.equal(asda.observation.pricePence, 32);
-  assert.equal(asda.reason, 'Offer price · not ranked');
-  assert.equal(getCommodityRows(current).averagePence, 40);
+  assert.deepEqual(ranked.map(row => [row.id, row.observation.pricePence, row.changePence]), [['asda-express', 50, null], ['sainsburys', 45, 0], ['tesco', 35, 0], ['asda', 32, -2]]);
+  assert.deepEqual(unranked.map(row => row.id), ['morrisons']);
+  assert.equal(getCommodityRows(current).averagePence, 40.5);
+  assert.equal(getCommodityRows(current).perKg, 22.5);
+  const html = renderLeaderboard(current);
+  assert.match(html, /Reported in-store/);
+  assert.match(html, /<summary>View photo/);
+  assert.match(html, /asda-express-freddo-50p-thumb.jpg/);
+  assert.match(html, /Offer price/);
+  const row = ranked[0].observation;
+  assert.throws(() => validateObservation({ ...row, sourceUrl: 'https://example.com/photo.jpg' }), /unapproved/);
+  assert.throws(() => validateObservation({ ...single, method: 'reader-reported' }), /verification/);
 });
