@@ -1164,3 +1164,5 @@ tr[data-selected=true] {
   .leaderboard-evidence figcaption, .in-store-label { overflow-wrap: anywhere; }
 }
 .leaderboard-evidence figcaption, .in-store-label { white-space: normal; }
+
+.reaction-date { display: block; font-size: 10px; line-height: 1.5; color: var(--muted); }

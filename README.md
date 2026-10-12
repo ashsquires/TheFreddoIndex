@@ -52,7 +52,7 @@ The focusable chart supports Left/Right to select adjacent years and Home/End fo
 
 ## Latest price and reactions card
 
-Barbara’s and Matty’s reactions stay fixed when users explore historical years. The chart’s top-right Price Range shows the October 2026 supermarket observations. The 2026 graph point and inflation comparison use their equal-shop average; 1995–2025 use approximate historical prices. The original 35p 2026 entry remains unchanged in `freddo-data.js` and is used when the snapshot has no comparable quotes. “Have your say” links to the static email contact form. The Freddo FAQ section has been removed at the owner's request.
+Barbara’s, Matty’s and Shah’s reactions stay fixed when users explore historical years. The chart’s top-right Price Range shows the October 2026 supermarket observations. The 2026 graph point and inflation comparison use their equal-shop average; 1995–2025 use approximate historical prices. The original 35p 2026 entry remains unchanged in `freddo-data.js` and is used when the snapshot has no comparable quotes. “Have your say” links to the static email contact form. The Freddo FAQ section has been removed at the owner's request.
 
 ## Supermarket price snapshot
 
@@ -79,3 +79,5 @@ The right-hand sidebar contains a ranked table with an icon per item and a pale-
 To add sourced comparison items, add a uniquely keyed object to `benchmarks` in `data/retailer-prices.json`, with `name`, `displayName`, `icon` (text/emoji), `description`, `currency: "GBP"`, positive `pricePerKg`, `checkedAt`, `sourceName`, `sourceUrl` (HTTPS), and `basis`. Include `referenceDate` for published quotes and `priceType: "promotion"` or `"retail"` for references that must be checked within 48 hours of the snapshot cut-off. The table discovers and sorts all valid entries, including ten or more items, without renderer changes. Monetary ties receive the same rank. Add only prices verified from their source; no placeholder price rows are shown. `commodityExtras` holds explicitly non-priced joke rows such as “My father’s approval — Priceless”, outside the numeric ranking. Run the tests and build after edits.
 
 Asda Express is identified separately from ASDA in the leaderboard. Its 50p report expands to show the submitted shelf photo, with a link to the larger image; its retailer name does not link to a supermarket website. The report date is 8 October 2026 and the branch is unspecified. The chart and comparison cards share a column to keep them adjacent regardless of sidebar height.
+
+Reaction dates: Barbara — 3 March 2025 (supplied by the owner); Matty — 8 October 2026; Shah — 12 October 2026. Quotes are preserved as supplied.
