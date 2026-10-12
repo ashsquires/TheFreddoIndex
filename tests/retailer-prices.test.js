@@ -132,7 +132,7 @@ test('commodity index averages eligible shops, expands from data and ranks using
   assert.ok(html.includes(snapshot.benchmarks.dairy_milk.sourceUrl));
   assert.doesNotMatch(html, /<select/);
   assert.match(html, /September 2026 average · 3 supermarkets · 38p/);
-  assert.match(html, /data-commodity="freddo"[\s\S]*?<td>£21.11<\/td>/);
+  assert.match(html, /data-commodity="freddo"[\s\S]*?<td>£21.11\/kg<\/td>/);
   const withoutHighest = structuredClone(snapshot);
   withoutHighest.observations.find(row => row.retailerId === 'sainsburys').availability = 'unavailable';
   assert.equal(getCommodityRows(withoutHighest, now).averagePence, 34.5);

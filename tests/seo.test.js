@@ -17,8 +17,7 @@ test('the complete price history is present before JavaScript executes', () => {
   assert.ok(html.includes(`data-current-average="${latest.priceBasis === 'checked-average' ? averagePence : ''}" data-current-shops="${ranked.length}"`));
   const expectedPrice = latest.priceBasis === 'checked-average' ? `${formatPence(latest.price)} · checked average` : `${latest.price}p`;
   assert.ok(table.includes(`<th scope="row">2026</th><td>${expectedPrice}</td>`));
-  assert.ok(html.includes(`id="recorded-price">${latest.price.toFixed(1).replace(/\.0$/, '')}<span>p</span>`));
-  assert.ok(html.includes(`id="difference-price">+${Math.abs(latest.difference).toFixed(1)}<span>p</span>`));
+  assert.ok(html.includes(`id="hero-price">${latest.price.toFixed(1).replace(/\.0$/, '')}<span>p</span>`));
 });
 
 test('structured site identity agrees with the canonical hostname', () => {

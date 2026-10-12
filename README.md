@@ -78,8 +78,10 @@ The right-hand sidebar contains a ranked table with an icon per item and a pale-
 
 To add sourced comparison items, add a uniquely keyed object to `benchmarks` in `data/retailer-prices.json`, with `name`, `displayName`, `icon` (text/emoji), `description`, `currency: "GBP"`, positive `pricePerKg`, `checkedAt`, `sourceName`, `sourceUrl` (HTTPS), and `basis`. Include `referenceDate` for published quotes and `priceType: "promotion"` or `"retail"` for references that must be checked within 48 hours of the snapshot cut-off. The table discovers and sorts all valid entries, including ten or more items, without renderer changes. Monetary ties receive the same rank. Add only prices verified from their source; no placeholder price rows are shown. `commodityExtras` holds explicitly non-priced joke rows such as “My father’s approval — Priceless”, outside the numeric ranking. Run the tests and build after edits.
 
-Asda Express is identified separately from ASDA in the leaderboard. Its 50p report expands to show the submitted shelf photo, with a link to the larger image; its retailer name does not link to a supermarket website. The report date is 8 October 2026 and the branch is unspecified. The chart and comparison cards share a column to keep them adjacent regardless of sidebar height.
+Asda Express is identified separately from ASDA in the leaderboard. Its 50p report expands to show the submitted shelf photo, with a link to the larger image; its retailer name does not link to a supermarket website. The report date is 8 October 2026 and the branch is unspecified. The chart retains its inline selected-year comparison; the separate “A Freddo in 2026” cards have been removed.
 
 Reaction dates: Barbara — 3 March 2025 (supplied by the owner); Matty — 8 October 2026; Shah — 12 October 2026. Quotes are preserved as supplied.
 
-Reactions sit in a full-width section below the chart and commodity index, with cards flowing into columns when space permits and stacking on narrow screens. The methodology is the final content section before the footer.
+Reactions sit in a full-width section below the chart and commodity index, with three equal-width columns above 700px and stacked cards on narrow screens. The methodology is the final content section before the footer.
+
+Commodity prices include /kg on every numeric row. The priceless father’s-approval row appears after the ranked commodities.

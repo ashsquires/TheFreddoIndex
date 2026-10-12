@@ -53,7 +53,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css?v=20261012-layout" />
+    <link rel="stylesheet" href="./styles.css?v=20261012-commodities" />
     <!-- Preserve the site's existing analytics property. -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZXG0LM7NCJ"></script>
     <script>
@@ -63,9 +63,9 @@
       gtag('config', 'G-ZXG0LM7NCJ');
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
-    <script type="module" src="./freddo.js"></script>
+    <script type="module" src="./freddo.js?v=20261012-commodities"></script>
     <script type="module" src="./contact.js"></script>
-    <script type="module" src="./leaderboard.js?v=20261012-layout"></script>
+    <script type="module" src="./leaderboard.js?v=20261012-commodities"></script>
   </head>
   <body data-current-average="40.5" data-current-shops="4" data-price-period="October 2026">
     <a class="skip-link" href="#main">Skip to content</a>
@@ -159,35 +159,14 @@
 <!-- PRICE_ROWS_END --></tbody></table></div></details>
       </section>
 
-      <section class="comparison" aria-labelledby="comparison-title">
-        <div class="section-heading comparison-heading">
-          <h2 id="comparison-title">A Freddo in <span id="comparison-year">2026</span></h2>
-        </div>
-        <div class="comparison-grid" id="comparison-values" aria-live="polite" aria-atomic="true">
-          <article class="price-card recorded-card">
-            <div class="card-top"><h3 id="recorded-price-label">Checked average</h3><span class="card-icon" aria-hidden="true">↗</span></div>
-            <p class="big-number" id="recorded-price">40.5<span>p</span></p>
-            <p class="card-note" id="recorded-price-note">4 supermarkets · October 2026 snapshot</p>
-          </article>
-          <article class="price-card inflation-card">
-            <div class="card-top"><h3>If it followed inflation</h3><span class="card-icon" aria-hidden="true">≈</span></div>
-            <p class="big-number" id="inflation-price">21.4<span>p</span></p>
-            <p class="card-note" id="inflation-period">10p in 1995 · CPI: August 2026</p>
-          </article>
-          <article class="price-card difference-card">
-            <div class="card-top"><h3>Difference</h3><span class="card-icon" aria-hidden="true">!</span></div>
-            <p class="big-number" id="difference-price">+19.1<span>p</span></p>
-            <p class="card-note" id="difference-description">90% above the inflation-only price</p>
-          </article>
-        </div>
-      </section>
+
       </div>
         <div class="dashboard-sidebar">
           <section id="commodity-index" class="commodity-panel" aria-labelledby="commodity-title">
 <!-- COMMODITY_INDEX_START -->
 <div class="commodity-heading"><p class="eyebrow">The pecking order</p><h2 id="commodity-title">Commodity Index<span class="brand-dot">.</span></h2><p>Same weight. Questionable priorities.</p></div>
     <p class="commodity-basis">October 2026 average · 4 supermarkets · 40.5p</p>
-    <div id="weight-comparison" aria-live="polite"><table class="commodity-table"><caption class="sr-only">Commodity comparisons, highest price first. Freddo uses the average of 4 comparable supermarket prices in the October 2026 snapshot. The priceless row is a joke, outside the numeric ranking.</caption><thead><tr><th scope="col">Item</th><th scope="col">£ / kg</th></tr></thead><tbody><tr class="commodity-joke"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🏆</span><span>My father’s approval<small>Still waiting.</small></span></span></th><td>Priceless</td></tr><tr class="" data-commodity="lobster"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🦞</span><span><span class="commodity-rank">1.</span> Lobster<small>Whole, shell-on · offer</small></span></span></th><td>£26.72</td></tr><tr class="commodity-freddo" data-commodity="freddo"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🐸</span><span><span class="commodity-rank">2.</span> Freddo<small>4-shop average · 40.5p / 18g</small></span></span></th><td>£22.50</td></tr><tr class="" data-commodity="dairy_milk"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🍫</span><span><span class="commodity-rank">3.</span> Cadbury Dairy Milk<small>110g bar · Tesco</small></span></span></th><td>£16.82</td></tr><tr class="" data-commodity="lithium"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🔋</span><span><span class="commodity-rank">4.</span> Lithium<small>Commodity quote</small></span></span></th><td>£15.01</td></tr><tr class="" data-commodity="copper"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🧵</span><span><span class="commodity-rank">5.</span> Copper<small>Bright wire · scrap</small></span></span></th><td>£8.40</td></tr></tbody></table>
+    <div id="weight-comparison" aria-live="polite"><table class="commodity-table"><caption class="sr-only">Commodity comparisons, highest price first. Freddo uses the average of 4 comparable supermarket prices in the October 2026 snapshot. The priceless row is a joke, outside the numeric ranking.</caption><thead><tr><th scope="col">Item</th><th scope="col">£ / kg</th></tr></thead><tbody><tr class="" data-commodity="lobster"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🦞</span><span><span class="commodity-rank">1.</span> Lobster<small>Whole, shell-on · offer</small></span></span></th><td>£26.72/kg</td></tr><tr class="commodity-freddo" data-commodity="freddo"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🐸</span><span><span class="commodity-rank">2.</span> Freddo<small>4-shop average · 40.5p / 18g</small></span></span></th><td>£22.50/kg</td></tr><tr class="" data-commodity="dairy_milk"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🍫</span><span><span class="commodity-rank">3.</span> Cadbury Dairy Milk<small>110g bar · Tesco</small></span></span></th><td>£16.82/kg</td></tr><tr class="" data-commodity="lithium"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🔋</span><span><span class="commodity-rank">4.</span> Lithium<small>Commodity quote</small></span></span></th><td>£15.01/kg</td></tr><tr class="" data-commodity="copper"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🧵</span><span><span class="commodity-rank">5.</span> Copper<small>Bright wire · scrap</small></span></span></th><td>£8.40/kg</td></tr><tr class="commodity-joke"><th scope="row"><span class="commodity-item"><span class="commodity-icon" aria-hidden="true">🏆</span><span>My father’s approval<small>Still waiting.</small></span></span></th><td>Priceless</td></tr></tbody></table>
     <div class="commodity-verdict"><p>Pricier than lithium. Still cheaper than lobster.</p><small>About 2.7× the price of scrap copper by weight.</small></div>
     <details class="weight-method"><summary>Show the maths and sources</summary><p>One eligible 18g single-bar price per supermarket in this snapshot: 50p + 45p + 35p + 32p. Their unweighted average is 40.50p; 40.50p ÷ 18g × 10 = £22.50 per kg. Calculations use the unrounded average. <a href="https://thefreddoindex.com/assets/reports/asda-express-freddo-50p.jpg" target="_blank" rel="noopener noreferrer">Asda Express <span aria-hidden="true">↗</span></a> (reported in-store <time datetime="2026-10-08T16:55:00Z">October 2026</time>); <a href="https://www.sainsburys.co.uk/groceries/product/cadbury-dairy-milk-freddo-chocolate-bar-18g" target="_blank" rel="noopener noreferrer">Sainsbury’s <span aria-hidden="true">↗</span></a> (checked <time datetime="2026-10-08T14:34:00Z">October 2026</time>); <a href="https://www.tesco.com/shop/en-GB/products/275341411" target="_blank" rel="noopener noreferrer">Tesco <span aria-hidden="true">↗</span></a> (checked <time datetime="2026-10-08T14:34:00Z">October 2026</time>); <a href="https://www.asda.com/groceries/product/5803656" target="_blank" rel="noopener noreferrer">ASDA <span aria-hidden="true">↗</span></a> (checked <time datetime="2026-10-08T14:34:00Z">October 2026</time>). Public offers and the Asda Express reader report are included. Multipacks, loyalty-only offers and prices outside the snapshot window are excluded.</p><p>Whole cooked lobster reference: <a href="https://www.waitrose.com/ecom/products/canadian-whole-cooked-lobster/596893-312313-312314?pp=1" target="_blank" rel="noopener noreferrer">Waitrose <span aria-hidden="true">↗</span></a>, checked October 2026. Waitrose reduced-to-clear price: £9.35 for a 350g whole cooked Canadian lobster, previously £12.50, with displayed unit price £26.72/kg. Add-to-trolley enabled. Includes shell; not edible meat alone. Delivery excluded. Checked within 48 hours of the snapshot cut-off; current prices may differ.</p><p>Cadbury Dairy Milk 110g reference: <a href="https://www.tesco.com/shop/en-GB/products/284117451" target="_blank" rel="noopener noreferrer">Tesco <span aria-hidden="true">↗</span></a>, checked October 2026. Tesco public standard price: £1.85 for 110g, with a displayed unit price of £16.82/kg. Add-to-basket enabled. Online prices may vary by location. Checked within 48 hours of the snapshot cut-off; current prices may differ.</p><p>Lithium reference: <a href="https://www.dailymetalprice.com/metalprices.php?c=li&amp;d=20&amp;u=kg&amp;x=GBP" target="_blank" rel="noopener noreferrer">Daily Metal Price <span aria-hidden="true">↗</span></a>, checked September 2026. Published GBP quote for 15 September 2026. The provider tracks lithium carbonate, not pure lithium metal. This is a commodity reference, not a retail purchase price. The earlier £15.31 quote was dated 14 September. <a href="https://www.dailymetalprice.com/lithium.html" target="_blank" rel="noopener noreferrer">What this quote measures <span aria-hidden="true">↗</span></a>.</p><p>Bright copper wire (scrap) reference: <a href="https://www.alveronix.co.uk/" target="_blank" rel="noopener noreferrer">Alveronix <span aria-hidden="true">↗</span></a>, checked September 2026. Indicative scrap buying rate, subject to grading. A retail chocolate price versus a scrap buying price, for perspective; not a copper retail or exchange quote.</p><p>These are dated reference prices for perspective, not live feeds or interchangeable products. Eligibility was checked at the snapshot cut-off: commodity quotes within 30 days, retail prices and offers within 48 hours. Current prices may differ.</p></details></div>
 <!-- COMMODITY_INDEX_END -->

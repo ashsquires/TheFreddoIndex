@@ -11,23 +11,10 @@ function setPrice(id, value) {
   el(id).replaceChildren(document.createTextNode(value), Object.assign(document.createElement('span'), { textContent: 'p' }));
 }
 
-function differenceLabel(row) {
-  return row.direction === 'equal' ? 'Exactly in line with inflation'
-    : `${Math.abs(row.differencePercent).toFixed(0)}% ${row.direction} the inflation-only price`;
-}
-
 function selectYear(year) {
   const row = rows.find(item => item.year === year);
   const checkedAverage = row.priceBasis === 'checked-average';
   selectedYear = year;
-  el('comparison-year').textContent = String(year);
-  el('recorded-price-label').textContent = checkedAverage ? 'Checked average' : 'Recorded price';
-  setPrice('recorded-price', checkedAverage ? row.price.toFixed(1).replace(/\.0$/, '') : String(row.price));
-  el('recorded-price-note').textContent = checkedAverage ? `${row.shopCount} supermarket${row.shopCount === 1 ? '' : 's'} · ${pricePeriod || 'checked'} snapshot` : 'Approximate historical record';
-  setPrice('inflation-price', row.inflationPrice.toFixed(1));
-  setPrice('difference-price', `${row.direction === 'above' ? '+' : row.direction === 'below' ? '−' : ''}${Math.abs(row.difference).toFixed(1)}`);
-  el('inflation-period').textContent = `10p in 1995 · CPI: ${row.cpi.period}`;
-  el('difference-description').textContent = differenceLabel(row);
   const badge = Object.assign(document.createElement('span'), { className: 'year-badge', textContent: String(year) });
   const description = Object.assign(document.createElement('p'), {
     textContent: `${checkedAverage ? `The checked ${row.shopCount}-supermarket average is ${formatPence(row.price)}` : `Our approximate historical price is ${row.price}p`}. If it had followed inflation from ${BASELINE.year}, it would be ${formatPence(row.inflationPrice)}. ${row.direction === 'equal' ? 'This is our 10p starting point.' : `${formatPence(Math.abs(row.difference))} ${row.direction} the inflation-only price.`}`,

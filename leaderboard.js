@@ -1,4 +1,4 @@
-import { renderLeaderboard, renderLatestPrices, renderPriceTicker, renderCommodityIndex } from './leaderboard-render.js?v=20261012-layout';
+import { renderLeaderboard, renderLatestPrices, renderPriceTicker, renderCommodityIndex } from './leaderboard-render.js?v=20261012-commodities';
 import { getCommodityRows } from './retailer-data.js';
 
 function enableTicker() {
