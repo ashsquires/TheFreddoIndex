@@ -81,3 +81,5 @@ To add sourced comparison items, add a uniquely keyed object to `benchmarks` in 
 Asda Express is identified separately from ASDA in the leaderboard. Its 50p report expands to show the submitted shelf photo, with a link to the larger image; its retailer name does not link to a supermarket website. The report date is 8 October 2026 and the branch is unspecified. The chart and comparison cards share a column to keep them adjacent regardless of sidebar height.
 
 Reaction dates: Barbara — 3 March 2025 (supplied by the owner); Matty — 8 October 2026; Shah — 12 October 2026. Quotes are preserved as supplied.
+
+Reactions sit in a full-width section below the chart and commodity index, with cards flowing into columns when space permits and stacking on narrow screens. The methodology is the final content section before the footer.

@@ -72,7 +72,7 @@ export function renderWeightComparison(snapshot, now = Date.now()) {
 
 export function renderLeaderboard(snapshot, now = Date.now()) {
   const { ranked, unranked } = getLeaderboard(snapshot, now);
-  return `<div class="leaderboard-heading"><div><p class="eyebrow">The supermarket price watch</p><h2 id="leaderboard-title">The leaderboard of shame</h2><p>Same 18g frog. Different levels of cheek.</p></div><span class="preview-badge">${escape(snapshot.displayPeriod || 'Source-checking')} snapshot</span></div>
+  return `<div class="leaderboard-heading"><div><p class="eyebrow">The supermarket price watch</p><h2 id="leaderboard-title">The leaderboard of shame</h2></div><span class="preview-badge">${escape(snapshot.displayPeriod || 'Source-checking')} snapshot</span></div>
     <p class="leaderboard-note">Saved ${escape(snapshot.displayPeriod || 'dated')} page observations. This static snapshot does not update automatically. Single-bar prices include public offers and reader-reported in-store prices recorded within 48 hours of the snapshot.</p>
     ${ranked.length ? `<div class="leaderboard-table-wrap" tabindex="0" role="region" aria-label="Supermarket single-bar prices"><table class="leaderboard-table"><caption>Highest price first · original milk-chocolate Freddo, 18g</caption><thead><tr><th scope="col">Rank / supermarket</th><th scope="col">One Freddo</th><th scope="col">Per 100g</th><th scope="col">Checked / reported</th></tr></thead><tbody>${ranked.map(row => {
       const weight = priceByWeight(row.observation.pricePence, row.observation.weightGrams);
