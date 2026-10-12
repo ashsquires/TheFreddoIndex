@@ -53,15 +53,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css?v=20261012-commodities" />
-    <!-- Preserve the site's existing analytics property. -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZXG0LM7NCJ"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-ZXG0LM7NCJ');
-    </script>
+    <link rel="stylesheet" href="./styles.css?v=20261012-privacy" />
+    <script type="module" src="./analytics-consent.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
     <script type="module" src="./freddo.js?v=20261012-commodities"></script>
     <script type="module" src="./contact.js"></script>
@@ -221,7 +214,7 @@
           <input id="contact-name" name="name" maxlength="80" autocomplete="name" placeholder="Barbara from Wakefield" />
           <label for="contact-message">Your message</label>
           <textarea id="contact-message" name="message" required minlength="3" maxlength="1000" rows="5" placeholder="35p? Christ." aria-describedby="contact-guidance"></textarea>
-          <p id="contact-guidance" class="contact-help">Up to 1,000 characters. Your email app will address the message to thefreddoindex@gmail.com.</p>
+          <p id="contact-guidance" class="contact-help">Up to 1,000 characters. Your email app will address the message to thefreddoindex@gmail.com. See our <a href="./privacy.html">Privacy &amp; Cookies notice</a>.</p>
           <button class="comment-submit" type="submit">Open email draft <span aria-hidden="true">↗</span></button>
           <p id="contact-status" class="contact-help" role="status" aria-live="polite"></p>
         </form>
@@ -235,6 +228,6 @@
       </section>
     </main>
 
-    <footer class="site-footer"><div class="shell footer-inner"><p>🐸 <strong>The Original Freddo Index</strong><span>Tracking inflation, one frog at a time.</span></p><p>© <span id="footer-year">2026</span> · Not affiliated with Cadbury. · <a href="#contact">Contact</a><span>Data, nostalgia and a healthy sense of outrage.</span></p></div></footer>
+    <footer class="site-footer"><div class="shell footer-inner"><p>🐸 <strong>The Original Freddo Index</strong><span>Tracking inflation, one frog at a time.</span></p><p>© <span id="footer-year">2026</span> · Not affiliated with Cadbury. · <a href="#contact">Contact</a> · <a href="./privacy.html">Privacy &amp; Cookies</a> <button class="cookie-settings" type="button" data-cookie-settings hidden>Cookie settings</button><span>Data, nostalgia and a healthy sense of outrage.</span></p></div></footer>
   </body>
 </html>

@@ -8,6 +8,7 @@ export default defineConfig(({ mode }) => {
       build: {
         assetsInlineLimit: 0,
         rollupOptions: {
+          input: { main: path.resolve(__dirname, 'index.html'), privacy: path.resolve(__dirname, 'privacy.html') },
           output: {
             // Search engines need a crawlable icon at a stable URL.
             assetFileNames: (asset) => /\.(png|ico)$/.test(asset.name ?? '')
