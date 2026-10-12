@@ -60,18 +60,6 @@ status.className = 'privacy-sr-only';
 status.setAttribute('role', 'status');
 document.body.append(status);
 
-function updateStatus(choice) {
-  document.querySelectorAll('[data-privacy-headline]').forEach(node => {
-    node.textContent = enabled ? 'Freddo prices. Your privacy. Your choice.' : 'We track Freddo prices, not you.';
-  });
-  document.querySelectorAll('[data-analytics-status]').forEach(node => {
-    node.textContent = !enabled ? 'Google Analytics is currently switched off. No analytics cookies are set and no analytics data is sent to Google.'
-      : choice === 'accepted' ? 'You have accepted analytics. You can change your choice below at any time.'
-      : choice === 'rejected' ? 'You have rejected analytics. Google Analytics is not running.'
-      : 'Analytics is optional and stays off unless you accept it.';
-  });
-}
-
 panel.addEventListener('click', event => {
   const button = event.target.closest('[data-choice]');
   if (!button || !enabled) return;
@@ -85,7 +73,6 @@ panel.addEventListener('click', event => {
     if (started) { location.reload(); return; }
   }
   panel.hidden = true;
-  updateStatus(choice);
   status.textContent = choice === 'accepted' ? 'Analytics accepted.' : 'Analytics rejected.';
   (returnFocus || document.querySelector('[data-cookie-settings]'))?.focus();
 });
@@ -111,7 +98,6 @@ async function initialise() {
   } catch { /* Fail closed: a missing or invalid configuration never enables GA. */ }
   const choice = savedChoice();
   document.querySelectorAll('[data-cookie-settings]').forEach(button => { button.hidden = !enabled; });
-  updateStatus(choice);
   if (!enabled) {
     clearAnalyticsCookies();
     // Enabling again requires a fresh choice, even if previously accepted.

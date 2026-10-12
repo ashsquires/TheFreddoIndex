@@ -101,7 +101,7 @@ Commodity prices include /kg on every numeric row. The priceless father’s-appr
 - Publish the changed JSON to apply the switch. For Vite deployments, rebuild and publish `dist/`; root-based static hosting serves the JSON directly. It is fetched without browser caching. Already-open tabs pick up an administrator switch on their next reload/navigation; visitor choice changes propagate between tabs.
 - If the config is missing, invalid or cannot load, GA stays off. No JavaScript means no GA. A missing storage permission still allows the current page's choice, but it may be asked again on navigation.
 - Preferences last 180 days. GA cookies are configured for 180 days without visit-based renewal. This is separate from retention of data already collected in the GA account.
-- The privacy headline changes when analytics is enabled, so the paused-mode “We track Freddo prices, not you” claim is not used while optional analytics is available.
+- The privacy notice and headline use consistent wording regardless of the analytics switch. The page does not display the operational on/off status.
 
 ### Before enabling analytics
 
