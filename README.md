@@ -16,7 +16,7 @@ npm run preview
 
 The active site is a standalone HTML page, CSS and browser JavaScript. The price comparison requires no API key or backend. The public contact form opens a pre-addressed draft in the visitor’s email app; the visitor must press Send there. An earlier moderated-comments backend remains in the repository but is not connected to the public page. The site can be served directly from the repository root by a static host, or built with Vite and served from `dist/`. Building alone does not publish the site.
 
-`index.html` loads `styles.css`, `freddo.js` and a pinned Chart.js 4.5.1 CDN script. `freddo.js` uses `freddo-data.js` for the shared price history, CPI snapshot and calculations. The older React/TypeScript files are inactive and are not the page entry point. Google Fonts remains in use. Google Analytics is paused by default; see the privacy controls below. If the chart CDN fails, the accessible data table remains available.
+`index.html` loads `styles.css`, `freddo.js` and a pinned Chart.js 4.5.1 CDN script. `freddo.js` uses `freddo-data.js` for the shared price history, CPI snapshot and calculations. The older React/TypeScript files are inactive and are not the page entry point. Google Fonts remains in use. Cloudflare Web Analytics provides cookieless aggregate measurement with a footer opt-out; see the privacy controls below. If the chart CDN fails, the accessible data table remains available.
 
 ## Inflation methodology
 
@@ -88,25 +88,14 @@ Commodity prices include /kg on every numeric row. The priceless father’s-appr
 
 ## Privacy and analytics controls
 
-`privacy.html` is the combined Privacy & Cookies notice, linked from the footer and contact form. Both HTML entry points use `analytics-consent.js`. The old unconditional Google Analytics tag has been removed.
+Both HTML pages load `analytics-consent.js`, which uses Cloudflare Web Analytics. No consent banner is displayed. The footer’s **Analytics settings** opens an accessible on/off control. The privacy notice explains the collection and objection mechanism.
 
-**The launch setting is off.** Edit the single boolean in `privacy-config.json`:
+`privacy-config.json` contains the public Cloudflare site token and `cloudflareAnalyticsEnabled` kill switch. The token is a public beacon identifier, not an API credential. `analyticsControlsEnabled` stays false to prevent older cached GA code from being re-enabled during rollout. Analytics only loads on `thefreddoindex.com`; local and preview hosts do not send visits. Missing/invalid config or inaccessible preference storage leaves it off.
 
-```json
-{ "analyticsControlsEnabled": false }
-```
+Preferences use `freddo-analytics-opt-out-v2` local storage until changed or cleared. Existing GA rejection choices migrate to opt-out. The script removes accessible old GA cookies and never loads GA. Changing a preference reloads the page to unload the beacon; existing queued measurements may finish during navigation. A storage event reloads other open tabs. The `analytics=off` URL parameter also suppresses collection on that page and supports opt-out if a storage write fails.
 
-- `false`: hide accept/reject and Cookie settings controls, never load Google Analytics, clear accessible old `_ga` cookies and any saved choice on the next page load.
-- `true`: show equal accept/reject buttons to visitors without a valid choice; load GA only after acceptance. Rejection persists. Cookie settings lets visitors change their choice on either page.
-- Publish the changed JSON to apply the switch. For Vite deployments, rebuild and publish `dist/`; root-based static hosting serves the JSON directly. It is fetched without browser caching. Already-open tabs pick up an administrator switch on their next reload/navigation; visitor choice changes propagate between tabs.
-- If the config is missing, invalid or cannot load, GA stays off. No JavaScript means no GA. A missing storage permission still allows the current page's choice, but it may be asked again on navigation.
-- Preferences last 180 days. GA cookies are configured for 180 days without visit-based renewal. This is separate from retention of data already collected in the GA account.
-- The privacy notice and headline use consistent wording regardless of the analytics switch. The page does not display the operational on/off status.
+Cloudflare setup uses manual snippet installation, not automatic injection, so the preference control cannot be bypassed. Do not enable automatic injection alongside this loader. Dashboard: https://dash.cloudflare.com/28e374ba50b347d18f8919dbbb955982/web-analytics/overview?siteTag~in=2ed361a4434641f4bc92e8e9a9fefef0&excludeBots=Yes
 
-### Before enabling analytics
+Publish the source on root-based static hosting; Vite builds also copy the config to `dist/`. Keep the existing GA property `G-ZXG0LM7NCJ` for historical reports; no GA account changes or deletions are needed. New and historical reports use different counting methods and live in separate dashboards. Document the cutover date when published.
 
-Confirm in GA Admin for `G-ZXG0LM7NCJ`: event/user data retention and reset-on-new-activity setting; Google Signals; granular location/device collection; Google Ads and other product links; advertising/personalisation features; account data-sharing options; enhanced measurement (especially form interactions, outbound clicks and URL/query-string collection); and acceptance of the applicable data-processing terms and transfer arrangements. Keep unnecessary advertising/sharing features off. The browser code disables Signals and ad-personalisation signals and denies advertising consent; that does not replace reviewing account settings. Update the policy with the confirmed retention period and providers/transfer arrangements before switching on.
-
-The owner chose not to publish their personal name. The notice currently identifies the site and contact mailbox only; this leaves an unresolved controller-identity disclosure gap. Do not describe it as full legal compliance. Contact correspondence uses purpose-based retention criteria; the owner has not selected a fixed period. Confirm hosting/log retention and provider transfer safeguards as part of the policy review. The operator should obtain permission before publishing identifiable visitor quotes or credits.
-
-Verification: browser checks cover no GA before consent, remembered rejection, acceptance across pages, withdrawal/cookie removal, expired consent, disabled mode and mobile layout. The live GA script was stubbed during acceptance tests to avoid sending test visits to the real property.
+The owner chose not to publish their personal name. The privacy notice identifies the site and contact mailbox only; this is not a claim of full legal compliance. Provider processing terms, international transfers and applicable visitor jurisdictions remain relevant to the privacy assessment.

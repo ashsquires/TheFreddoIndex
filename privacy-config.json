@@ -1,3 +1,5 @@
 {
-  "analyticsControlsEnabled": false
+  "analyticsControlsEnabled": false,
+  "cloudflareAnalyticsEnabled": true,
+  "cloudflareToken": "ea74047c19f5462caefcb84d2ba5685b"
 }
