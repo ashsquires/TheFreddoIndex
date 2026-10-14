@@ -1,0 +1,106 @@
+name: Single-bar cloud collection trial
+on:
+  push:
+    branches: [codex/cloud-price-trial]
+    paths: ['trial/**', '.github/workflows/collection-trial.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --prefix trial --no-audit --no-fund playwright@1.56.1
+      - run: cd trial && npx playwright install --with-deps chromium
+      - name: Collect prices and screenshots
+        run: |
+          cat > trial/collect.mjs <<'COLLECTOR'
+          import { chromium } from 'playwright';
+          import { mkdir, writeFile, appendFile } from 'node:fs/promises';
+          const targets = {
+            tesco: 'https://www.tesco.com/shop/en-GB/products/275341411',
+            asda: 'https://www.asda.com/groceries/product/5803656',
+            sainsburys: 'https://www.sainsburys.co.uk/groceries/product/cadbury-dairy-milk-freddo-chocolate-bar-18g',
+          };
+          const out = new URL('./results/', import.meta.url);
+          await mkdir(out, { recursive: true });
+          const browser = await chromium.launch();
+          const results = [];
+          try {
+            for (let round = 1; round <= 2; round++) {
+              for (const [retailer, url] of Object.entries(targets)) {
+                const context = await browser.newContext({ viewport: { width: 1440, height: 1100 }, locale: 'en-GB', timezoneId: 'Europe/London' });
+                const page = await context.newPage();
+                page.setDefaultTimeout(8000);
+                const result = { retailer, round, url, startedAt: new Date().toISOString(), status: 'failed', environment: 'GitHub-hosted Ubuntu; fresh signed-out headless Chromium; no postcode' };
+                try {
+                  const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+                  result.httpStatus = response?.status();
+                  await page.waitForTimeout(12000);
+                  for (const label of [/^Reject all$/i, /^Reject all cookies$/i, /^Reject optional cookies$/i]) {
+                    const button = page.getByRole('button', { name: label });
+                    if (await button.count() === 1 && await button.isVisible()) await button.click();
+                  }
+                  result.title = await page.title();
+                  result.finalUrl = page.url();
+                  const body = await page.locator('body').innerText();
+                  await writeFile(new URL(`${retailer}-${round}.txt`, out), body);
+                  // Scope to the product heading and stop at the first following add control,
+                  // avoiding prices from recommendations above or below the target product.
+                  const heading = page.getByRole('heading', { level: 1 }).filter({ hasText: /Cadbury.*Freddo.*18\s*g/i });
+                  if (await heading.count() !== 1) throw new Error('Expected single-bar product heading missing or ambiguous');
+                  result.productName = await heading.innerText();
+                  if (/pack|multipack|caramel/i.test(result.productName)) throw new Error('Unexpected product variant');
+                  const section = await heading.evaluate(h => {
+                    const end = [...document.querySelectorAll('button')].find(b => h.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING && /^add(?:\s+to\s+(?:basket|trolley))?$/i.test((b.innerText || '').trim()));
+                    if (!end) throw new Error('Product add control unavailable; manual evidence review required');
+                    const range = document.createRange(); range.setStartBefore(h); range.setEndBefore(end);
+                    return range.cloneContents().textContent.replace(/\s+/g, ' ').trim();
+                  });
+                  result.evidenceExcerpt = section;
+                  if (section.length > 3500) throw new Error('Product price scope too broad');
+                  if (result.httpStatus >= 400) throw new Error(`HTTP ${result.httpStatus}`);
+                  const amounts = [...section.matchAll(/£\s*(\d+\.\d{2})|\b(\d{1,3})p\b/g)]
+                    .map(m => ({ pence: m[1] ? Math.round(Number(m[1])*100) : Number(m[2]), tail: section.slice(m.index + m[0].length, m.index + m[0].length + 15) }))
+                    .filter(m => !/^\s*(?:\/|per)/i.test(m.tail));
+                  const prices = [...new Set(amounts.map(m => m.pence))];
+                  if (!prices.length || prices.some(p => p <= 0 || p > 200)) throw new Error('Missing or implausible single-bar price');
+                  if (/clubcard|nectar|\bfor\s*£/i.test(section)) throw new Error('Conditional promotion needs explicit parsing');
+                  if (prices.length === 1) {
+                    result.normalPricePence = prices[0]; result.publicOfferPricePence = null;
+                  } else if (retailer === 'asda' && prices.length === 2 && /was/i.test(section) && /actual price/i.test(section)) {
+                    result.normalPricePence = prices[0]; result.publicOfferPricePence = prices[1];
+                    if (prices[1] >= prices[0]) throw new Error('Unexpected offer price ordering');
+                  } else throw new Error('Ambiguous price candidates');
+                  result.weightGrams = 18; result.packCount = 1; result.currency = 'GBP';
+                  result.availability = 'Add control present; delivery availability unverified';
+                  result.status = 'collected';
+                } catch (error) { result.error = error.message; }
+                try {
+                  await page.screenshot({ path: new URL(`${retailer}-${round}.png`, out).pathname, fullPage: true, timeout: 15000 });
+                  result.screenshot = `${retailer}-${round}.png`;
+                } catch (error) { result.screenshotError = error.message; }
+                result.finishedAt = new Date().toISOString();
+                results.push(result);
+                await writeFile(new URL('results.json', out), JSON.stringify(results, null, 2));
+                console.log(JSON.stringify(result));
+                await context.close();
+              }
+            }
+          } finally { await browser.close(); }
+          if (process.env.GITHUB_STEP_SUMMARY) await appendFile(process.env.GITHUB_STEP_SUMMARY,
+            '| Retailer | Attempt | Collection | Screenshot | Details |\n|---|---|---|---|---|\n' + results.map(r => `| ${r.retailer} | ${r.round} | ${r.status} | ${r.screenshot ? 'saved' : 'failed'} | ${r.error || `${r.normalPricePence}p normal; ${r.publicOfferPricePence ?? 'no'} offer`} |`).join('\n'));
+          if (results.some(r => r.status !== 'collected' || !r.screenshot)) process.exitCode = 1;
+          COLLECTOR
+          node trial/collect.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: retailer-cloud-evidence
+          path: trial/results/
+          retention-days: 7
