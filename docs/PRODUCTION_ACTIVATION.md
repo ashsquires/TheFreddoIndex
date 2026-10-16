@@ -29,3 +29,15 @@ Prepared 16 October 2026. Target **only** personal Supabase `ectikpmaidqobqfsqif
 - Two later scheduled persistence days (#6) and seven consecutive actual UK dates before admission (#2/#9). Local clock simulations cannot replace these gates.
 
 The deployment must not be represented as complete while any connection or elapsed-day evidence remains outstanding.
+
+## Verified activation progress — 16 October 2026
+
+- All seven application migrations and private evidence buckets are deployed. All four production functions are deployed with handler authentication; unauthenticated calls return 401/403.
+- Main and Pages include the owner-only consent/review implementation. The monitor remains absent from public navigation and the sitemap.
+- Production client `a48de168-7241-40d5-98a4-6aa0aa72b40b` is registered with PKCE and the exact ChatGPT callback. Its collector grant is restricted to the Freddo owner and expires 14 January 2027 at 16:33:58 UTC. Owner consent completed in Chrome and ChatGPT confirmed the connection. A manual all-three cloud persistence/chunk/replay test was launched in the existing collector chat; its result has not yet been inspected.
+- Owner operator access expires 16 October 2027 at 16:26:49 UTC.
+- A sending-only, domain-restricted Resend credential is stored in the personal project. Maintenance is enabled and its Vault-authenticated Cron runs every five minutes. An unattended run at 16:30 UTC succeeded and produced zero duplicate alerts after the initial manual check.
+- The RSA recovery pair is in `~/Documents/Freddo Recovery/` with owner-only permissions. Separate maintenance/backup credentials are stored in Supabase. GitHub credential configuration and encrypted artifact verification remain pending; backup activation is not yet complete.
+- The latest ChatGPT trial on 16 October reported all three prices and screenshots successfully, but did not write production observations. The existing daily task remains 08:00 Europe/London pending the production connector.
+
+Browser completion was interrupted by the Mac locking. Remaining setup requires unlocking the browser session: inspect the in-flight production trial; update the existing 08:00 task only after transport proof; configure/check GitHub storage and backup credentials; enable and restore a real encrypted artifact; verify production email delivery/recovery and live retention. All 112 local tests and the four Deno entrypoint checks passed after the owner-only and production-client changes. No remaining ticket is closed solely on those local results.
