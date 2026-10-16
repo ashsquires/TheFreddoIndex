@@ -8,3 +8,14 @@ verify_jwt = false
 # OAuth bearer tokens are verified by the handler, with live allowlist/session checks.
 [functions.freddo-probe]
 verify_jwt = false
+
+# These handlers verify OAuth/session or dedicated scoped job credentials themselves.
+# Enable only after the production access review in docs/PRODUCTION_ACTIVATION.md.
+[functions.freddo-ingest]
+verify_jwt = false
+[functions.freddo-ops]
+verify_jwt = false
+[functions.freddo-maintenance]
+verify_jwt = false
+[functions.freddo-backup]
+verify_jwt = false

@@ -1,3 +1,4 @@
+import {authorizedClients} from './oauth-clients.js';
 import { createClient } from '@supabase/supabase-js';
 if (window.top !== window.self) {
   document.body.textContent = 'Open this authorization page directly in your browser.';
@@ -25,8 +26,11 @@ async function load() {
   const { data, error } = await client.auth.oauth.getAuthorizationDetails(authorizationId);
   if (error) throw error;
   if (!('authorization_id' in data)) { redirect(data.redirect_url); return; }
+  const profile=authorizedClients[data.client.id??data.client.client_id];
+  if(!profile)throw new Error('This client has not been approved for Freddo access.');
+  document.querySelector('h1').textContent=profile.title;document.title=profile.title;document.querySelector('#access-description').textContent=profile.description;document.querySelector('#approve').textContent=profile.button;
   status.textContent = `Signed in as ${user.email}`;
-  document.querySelector('#details').textContent = `Application: ${data.client.name}\nClient: ${data.client.id ?? data.client.client_id}\nReturn address: ${data.redirect_uri}\nIdentity permissions: ${data.scope || '(none)'}\nFreddo access: test files only, subject to the server allowlist.`;
+  document.querySelector('#details').textContent = `Application: ${data.client.name}\nClient: ${data.client.id ?? data.client.client_id}\nReturn address: ${data.redirect_uri}\nIdentity permissions: ${data.scope || '(none)'}\nFreddo access: ${profile.access}`;
   consent.hidden = false;
 }
 login.addEventListener('submit', async event => {

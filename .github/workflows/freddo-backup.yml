@@ -1,0 +1,42 @@
+name: Encrypted Freddo backup
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 11 * * *'
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: freddo-backup
+  cancel-in-progress: false
+jobs:
+  backup:
+    if: vars.FREDDO_BACKUP_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - id: export
+        run: node scripts/cloud-backup.mjs export
+        env:
+          FREDDO_BACKUP_KEY: ${{ secrets.FREDDO_BACKUP_KEY }}
+          FREDDO_BACKUP_PUBLIC_KEY: ${{ vars.FREDDO_BACKUP_PUBLIC_KEY }}
+      - id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.export.outputs.artifact_name }}
+          path: freddo-backup.enc
+          retention-days: ${{ steps.export.outputs.retention_days }}
+          if-no-files-found: error
+      - run: node scripts/retain-backups.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - run: node scripts/cloud-backup.mjs ack
+        env:
+          FREDDO_BACKUP_KEY: ${{ secrets.FREDDO_BACKUP_KEY }}
+          ARTIFACT_ID: ${{ steps.upload.outputs.artifact-id }}
+      - if: always()
+        run: rm -f freddo-backup.enc backup-receipt.json
