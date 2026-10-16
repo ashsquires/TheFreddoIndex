@@ -1,6 +1,7 @@
 import { createClient } from 'npm:@supabase/supabase-js@2.118.0';
 import { createProbeReceiver, PROJECT_URL } from './handler.js';
 import { createAuthenticator } from './auth.js';
+import { readProbeObject } from './storage.js';
 
 if (Deno.env.get('SUPABASE_URL') !== PROJECT_URL) throw new Error('Wrong project: probe disabled');
 const options = { auth: { persistSession: false, autoRefreshToken: false } };
@@ -24,8 +25,6 @@ Deno.serve(createProbeReceiver({ authenticate, storage: {
     if (error && !['409', '400'].includes(String(error.statusCode))) throw new Error('Upload failed');
   },
   async read(path: string) {
-    const { data, error } = await bucket.download(path);
-    if (error) throw new Error('Download failed');
-    return new Uint8Array(await data.arrayBuffer());
+    return readProbeObject(bucket, path);
   },
 } }));
