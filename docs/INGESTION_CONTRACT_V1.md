@@ -74,3 +74,5 @@ No new paid service is enabled. Existing ChatGPT subscription usage/limits apply
 #9: calculation reads accepted immutable observations only; no synthetic input, freshening by carry-forward or silent membership changes.
 
 Sources checked16 October2026: [OpenAI plugin OAuth](https://developers.openai.com/plugins/build/auth), [ChatGPT task notifications and supported app events](https://help.openai.com/en/articles/10291617-scheduled-tasks-in-chatgpt), [Supabase OAuth flows](https://supabase.com/docs/guides/auth/oauth-server/oauth-flows), [Supabase token security](https://supabase.com/docs/guides/auth/oauth-server/token-security), [Supabase pricing](https://supabase.com/pricing).
+
+`start_run_v1.cutoff_at` is the policy calculation cutoff for that UK date. Scheduled collectors must finish by it. It is not a manual-run expiry: a manual diagnostic/collection run may start after that day’s cutoff, and its later observations cannot enter the earlier index calculation. The cloud production trial verified this distinction on 16 October 2026.

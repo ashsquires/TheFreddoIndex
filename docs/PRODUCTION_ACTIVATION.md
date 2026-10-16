@@ -34,10 +34,25 @@ The deployment must not be represented as complete while any connection or elaps
 
 - All seven application migrations and private evidence buckets are deployed. All four production functions are deployed with handler authentication; unauthenticated calls return 401/403.
 - Main and Pages include the owner-only consent/review implementation. The monitor remains absent from public navigation and the sitemap.
-- Production client `a48de168-7241-40d5-98a4-6aa0aa72b40b` is registered with PKCE and the exact ChatGPT callback. Its collector grant is restricted to the Freddo owner and expires 14 January 2027 at 16:33:58 UTC. Owner consent completed in Chrome and ChatGPT confirmed the connection. A manual all-three cloud persistence/chunk/replay test was launched in the existing collector chat; its result has not yet been inspected.
+- Production client `a48de168-7241-40d5-98a4-6aa0aa72b40b` is registered with PKCE and the exact ChatGPT callback. Its collector grant is restricted to the Freddo owner and expires 14 January 2027 at 16:33:58 UTC. Owner consent completed in Chrome and ChatGPT confirmed the connection. The manual all-three cloud persistence/chunk/replay test completed successfully; see the verified run below.
 - Owner operator access expires 16 October 2027 at 16:26:49 UTC.
 - A sending-only, domain-restricted Resend credential is stored in the personal project. Maintenance is enabled and its Vault-authenticated Cron runs every five minutes. An unattended run at 16:30 UTC succeeded and produced zero duplicate alerts after the initial manual check.
 - The RSA recovery pair is in `~/Documents/Freddo Recovery/` with owner-only permissions. Separate maintenance/backup credentials are stored in Supabase. GitHub credential configuration and encrypted artifact verification remain pending; backup activation is not yet complete.
-- The latest ChatGPT trial on 16 October reported all three prices and screenshots successfully, but did not write production observations. The existing daily task remains 08:00 Europe/London pending the production connector.
+- The existing daily task `6acfbd68ef908190b1123f2a6249fdf3` was updated and read back in ChatGPT with the production prompt, 08:00 Europe/London, DST-aware scheduled slots, and preferred 16,384-byte chunks (49,152 maximum). No duplicate was created. Its next unattended production executions remain acceptance gates.
 
-Browser completion was interrupted by the Mac locking. Remaining setup requires unlocking the browser session: inspect the in-flight production trial; update the existing 08:00 task only after transport proof; configure/check GitHub storage and backup credentials; enable and restore a real encrypted artifact; verify production email delivery/recovery and live retention. All 112 local tests and the four Deno entrypoint checks passed after the owner-only and production-client changes. No remaining ticket is closed solely on those local results.
+Browser completion was interrupted again by the Mac locking. Remaining setup: configure/check GitHub storage and backup credentials; enable and restore a real encrypted artifact; verify production email delivery and live retention; finish private operator and index activation checks. All 112 local tests and the four Deno entrypoint checks passed after the owner-only and production-client changes. No remaining ticket is closed solely on those local results.
+
+
+### Production cloud persistence proof
+
+Run `d9d3f9e5-56f0-4676-860b-8c041c99049b` completed at 2026-10-16 16:43:33 UTC. Independent read-only SQL in the personal project verified its complete state, three immutable observations, and three stored JPEG evidence records linked through their attempts.
+
+| Retailer | Normal / public offer | Observation UTC | Evidence ID | Bytes | SHA256 |
+| --- | --- | --- | --- | --- | --- |
+| Tesco | 35p / none | 16:38:52.878 | `907dbae6-c79f-4e76-8230-56daf20b0d5b` | 118573 | `d8cbaa73048391f813a67a800f4f30c4a595757bb19fd3e79efa1ff3d0868ef5` |
+| ASDA | 34p / 32p | 16:39:07.701 | `f0945d43-d224-4ce3-8ab1-74826715587b` | 99019 | `ca3a5605f13e5835bde8a24f019ccf4c7eef29424c11a1c0ca5c197cedc1dcfc` |
+| Sainsbury's | 45p / none | 16:39:24.336 | `a40a846b-c0fe-49c3-b8b6-8ca1d5d209f1` | 83341 | `be58ab6bd8c5a29e81bed7360b14ae81faf0760998868d46611d06290bbe65c7` |
+
+All were single 18g bars. The cloud collector reported 8/7/6 chunks respectively, identical replay returning `replayed=true`, and changed-payload replay returning `CONFLICT`. The database independently confirms only the original three observations. This manual run does not prove two later unattended days or seven consecutive qualification dates.
+
+The independent watchdog also recorded one accepted recovery email for the restored collector grant, provider receipt `01a14591-248b-7296-9097-09c410d81f46`. All four initial/recovery alert events have one attempt each. Provider acceptance is verified; recipient delivery still needs verification.
