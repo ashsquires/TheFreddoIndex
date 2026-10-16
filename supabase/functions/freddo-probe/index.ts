@@ -2,6 +2,7 @@ import { createClient } from 'npm:@supabase/supabase-js@2.118.0';
 import { createProbeReceiver, PROJECT_URL } from './handler.js';
 import { createAuthenticator } from './auth.js';
 import { readProbeObject } from './storage.js';
+import { createEmailAlertProbe } from './email-alert.js';
 
 if (Deno.env.get('SUPABASE_URL') !== PROJECT_URL) throw new Error('Wrong project: probe disabled');
 const options = { auth: { persistSession: false, autoRefreshToken: false } };
@@ -19,7 +20,7 @@ const authenticate = createAuthenticator({
     return data === true;
   },
 });
-Deno.serve(createProbeReceiver({ authenticate, storage: {
+const storage = {
   async create(path: string, bytes: Uint8Array) {
     const { error } = await bucket.upload(path, bytes, { contentType: 'application/octet-stream', upsert: false });
     if (error && !['409', '400'].includes(String(error.statusCode))) throw new Error('Upload failed');
@@ -27,4 +28,8 @@ Deno.serve(createProbeReceiver({ authenticate, storage: {
   async read(path: string) {
     return readProbeObject(bucket, path);
   },
-} }));
+};
+const emailEnabled = Deno.env.get('FREDDO_EMAIL_TEST_ENABLED') === 'true';
+Deno.serve(createProbeReceiver({ authenticate, storage, ...(emailEnabled ? {
+  emailAlert: createEmailAlertProbe({ storage, apiKey: Deno.env.get('FREDDO_RESEND_API_KEY'), enabled: true }),
+} : {}) }));

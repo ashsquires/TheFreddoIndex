@@ -13,7 +13,14 @@ const json = (body, status = 200, headers = {}) => new Response(JSON.stringify(b
   status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', ...headers },
 });
 
-export function createProbeReceiver({ authenticate, storage }) {
+/**
+ * @param {{
+ *   authenticate: (token: string) => Promise<{userId: string} | null>,
+ *   storage: {create: (path: string, bytes: Uint8Array) => Promise<void>, read: (path: string) => Promise<Uint8Array | null>},
+ *   emailAlert?: (identity: {userId: string}) => Promise<unknown>
+ * }} options
+ */
+export function createProbeReceiver({ authenticate, storage, emailAlert }) {
   return async request => {
     const path = new URL(request.url).pathname.replace(/^\/functions\/v1/, '');
     if (request.method === 'GET' && path === '/freddo-probe/.well-known/oauth-protected-resource') return json({
@@ -50,10 +57,23 @@ export function createProbeReceiver({ authenticate, storage }) {
     const result = value => json({ jsonrpc: '2.0', id: message.id ?? null, result: value });
     if (message.method === 'initialize') return result({ protocolVersion: '2025-03-26', capabilities: { tools: {} }, serverInfo: { name: 'freddo-probe', version: '0.1.0' } });
     if (message.method === 'ping') return result({});
-    if (message.method === 'tools/list') return result({ tools });
+    if (message.method === 'tools/list') return result({ tools: [...tools, ...(emailAlert ? [{
+      name: 'probe_check_email_alert',
+      description: 'Check the fixed synthetic completion marker and send one deduplicated test failure email to the Freddo owner if it is missing. No arbitrary recipients or content. Temporary test only.',
+      inputSchema: { type: 'object', properties: {}, additionalProperties: false },
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: true },
+      securitySchemes: [{ type: 'oauth2', scopes: ['email'] }],
+    }] : [])] });
     if (message.method === 'tools/call') {
       const fail = text => result({ isError: true, content: [{ type: 'text', text }] });
       const { name, arguments: args } = message.params ?? {};
+      if (name === 'probe_check_email_alert' && emailAlert) {
+        if (!args || typeof args !== 'object' || Array.isArray(args) || Object.keys(args).length) return fail('Email test accepts no fields');
+        try {
+          const data = await emailAlert(identity);
+          return result({ structuredContent: data, content: [{ type: 'text', text: JSON.stringify(data) }] });
+        } catch { return fail('Email test failed; no delivery confirmation'); }
+      }
       if (!['probe_put', 'probe_get'].includes(name)) return fail('Unknown tool');
       if (!args || typeof args !== 'object' || !/^[a-zA-Z0-9_-]{1,80}$/.test(args.probe_id ?? '') || typeof args.probe_id !== 'string') return fail('Invalid probe ID');
       if (Object.keys(args).some(key => !['probe_id', ...(name === 'probe_put' ? ['base64'] : [])].includes(key))) return fail('Unexpected field');
