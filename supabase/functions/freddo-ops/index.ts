@@ -1,12 +1,12 @@
 import { createRuntime } from '../_shared/runtime.ts';
-import { PROJECT_URL, fail } from '../freddo-ingest/contract.js';
+import { PROJECT_URL, OWNER_ID, fail } from '../freddo-ingest/contract.js';
 import { createOperatorReceiver } from './handler.js';
 import { stockStatus } from '../freddo-ingest/monitoring.js';
 const {admin,rpc,verify}=createRuntime();
 Deno.serve(createOperatorReceiver({
  async authenticate(token:string){
   const c=await verify(token);
-  if(!c||c.iss!==`${PROJECT_URL}/auth/v1`||c.aud!=='authenticated'||c.role!=='authenticated'||typeof c.exp!=='number'||c.exp<=Date.now()/1000||typeof c.sub!=='string'||typeof c.session_id!=='string')return null;
+  if(!c||c.iss!==`${PROJECT_URL}/auth/v1`||c.aud!=='authenticated'||c.role!=='authenticated'||c.sub!==OWNER_ID||typeof c.exp!=='number'||c.exp<=Date.now()/1000||typeof c.sub!=='string'||typeof c.session_id!=='string')return null;
   return await rpc('freddo_operator_authorized',{p_user:c.sub,p_session:c.session_id})===true?{userId:c.sub}:null;
  },
  async execute(identity:{userId:string},action:string,args:Record<string,unknown>){

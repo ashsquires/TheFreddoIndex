@@ -1,3 +1,4 @@
+export const OWNER_ID='fb99ddb0-4537-46e3-a826-c26a71f13def';
 export const PROJECT_URL='https://ectikpmaidqobqfsqife.supabase.co';
 export const RESOURCE=`${PROJECT_URL}/functions/v1/freddo-ingest`;
 const text=(maxLength,minLength=0)=>({type:'string',maxLength,minLength});

@@ -23,6 +23,7 @@ async function load() {
   if (!authorizationId) throw new Error('Start this connection from ChatGPT to obtain an authorization request.');
   const { data: { user } } = await client.auth.getUser();
   if (!user) { status.textContent = 'Sign in to approve this connection. Open the email link in this browser tab.'; login.hidden = false; return; }
+  if(user.id!=='fb99ddb0-4537-46e3-a826-c26a71f13def')throw new Error('This connection is restricted to the Freddo owner account.');
   const { data, error } = await client.auth.oauth.getAuthorizationDetails(authorizationId);
   if (error) throw error;
   if (!('authorization_id' in data)) { redirect(data.redirect_url); return; }
@@ -40,7 +41,7 @@ login.addEventListener('submit', async event => {
   try {
     const email = new FormData(login).get('email');
     const callback = new URL('/oauth-consent.html', location.origin);
-    const { error } = await client.auth.signInWithOtp({ email, options: { emailRedirectTo: callback.href } });
+    const { error } = await client.auth.signInWithOtp({ email, options: { shouldCreateUser: false, emailRedirectTo: callback.href } });
     if (error) throw error;
     status.textContent = 'Check your email for the sign-in link. Open it in this same browser tab, then return to the connection request.';
   } catch (error) { showError(error); } finally { button.disabled = false; }
