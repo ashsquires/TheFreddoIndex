@@ -18,6 +18,21 @@ function showError(error){status.textContent=error.message||'The request failed.
 async function preview(evidence){
  try{const data=await request('evidence',{evidence_id:evidence.id});$('capture-time').textContent=`Captured ${date(data.captured_at)}. This private preview expires in two minutes.`;$('screenshot').src=data.url;$('preview').showModal();setTimeout(()=>{$('screenshot').removeAttribute('src');},data.expires_in*1000);}catch(error){showError(error);}
 }
+function historyPanel(observation){
+ const details=element('details'),content=element('div');details.append(element('summary','View review and correction history'),content);
+ let loaded=false;
+ details.ontoggle=async()=>{if(!details.open||loaded)return;loaded=true;content.textContent='Loading history…';try{
+  const history=await request('history',{observation_id:observation.id});content.replaceChildren();
+  for(const revision of history.revisions){
+   const entry=element('section');entry.append(element('h4',`Revision ${revision.revision_number}`),element('p',`Observed ${date(revision.observed_at)} · Normal ${money(revision.normal_price_pence)} · Public offer ${money(revision.public_offer_price_pence)} · Loyalty ${money(revision.loyalty_price_pence)} · ${revision.weight_g}g`));
+   if(revision.correction_reason)entry.append(element('p',`Correction: ${revision.correction_reason}`));
+   entry.append(element('p',revision.price_evidence_text));
+   for(const review of revision.reviews)entry.append(element('p',`${date(review.created_at)} — ${review.decision} · ${review.actor} · ${review.note??review.reason_codes.join(', ')}`));
+   content.append(entry);
+  }
+ }catch(error){loaded=false;content.textContent=error.message;}};
+ return details;
+}
 function reviewForm(observation){
  const details=element('details'),summary=element('summary','Review or correct this observation'),form=element('form');details.append(summary,form);
  const choice=element('select');choice.name='decision';for(const [value,text] of [['accepted','Accept'],['rejected','Reject'],['correct','Correct observed details']]){const option=element('option',text);option.value=value;choice.append(option);}
@@ -64,12 +79,12 @@ function render(data){
    const evidence=data.evidence.filter(e=>e.attempt_id===observation.attempt_id);
    for(const e of evidence){if(e.state==='stored'){const button=element('button','View screenshot');button.onclick=()=>preview(e);card.append(button);}else card.append(element('p',`Screenshot: ${e.failure_code??e.state}`));}
    if(!evidence.length)card.append(element('p','Screenshot metadata unavailable.'));
-   if(observation.review)card.append(reviewForm(observation));
+   if(observation.review)card.append(reviewForm(observation),historyPanel(observation));
   }else card.append(element('p','No price observation saved yet.'));
   for(const pending of outstanding){
    const queue=element('section',undefined,'warning');queue.append(element('h4',`Outstanding review — ${date(pending.observed_at)}`),element('p',`${money(pending.normal_price_pence)} normal · ${money(pending.public_offer_price_pence)} public offer · ${pending.weight_g}g`),element('p',pending.review.reason_codes?.join(', ')??'Needs review'));
    for(const evidence of data.evidence.filter(e=>e.attempt_id===pending.attempt_id&&e.state==='stored')){const button=element('button','View screenshot');button.onclick=()=>preview(evidence);queue.append(button);}
-   queue.append(reviewForm(pending));card.append(queue);
+   queue.append(reviewForm(pending),historyPanel(pending));card.append(queue);
   }
   const attempts=data.attempts.filter(a=>sourceIds.has(a.source_id)).sort((a,b)=>Date.parse(b.started_at)-Date.parse(a.started_at));
   if(attempts[0])card.append(element('small',`Latest visit: ${attempts[0].outcome.replaceAll('_',' ')} · ${date(attempts[0].started_at)}`));

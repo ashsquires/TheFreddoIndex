@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
-export const collectionMigrations=['20261016145103_daily_collection.sql','20261016145527_ingestion_transactions.sql','20261016150607_production_authorization.sql','20261016151752_monitoring_and_review.sql','20261016152822_restrict_default_rls_helper.sql','20261016152831_retention_and_backups.sql','20261016153527_daily_index.sql'];
+export const collectionMigrations=['20261016145103_daily_collection.sql','20261016145527_ingestion_transactions.sql','20261016150607_production_authorization.sql','20261016151752_monitoring_and_review.sql','20261016152822_restrict_default_rls_helper.sql','20261016152831_retention_and_backups.sql','20261016153527_daily_index.sql','20261017045742_operator_review_history.sql'];
 export async function buildDeployment(files=collectionMigrations){
  let sql=`-- Target: personal Freddo project ectikpmaidqobqfsqife ONLY. Verify dashboard identity before Run.\nbegin;\nselect pg_advisory_xact_lock(683204156);\ncreate schema if not exists freddo_private;\nrevoke all on schema freddo_private from public,anon,authenticated;\ncreate table if not exists freddo_private.deployment_versions(version text primary key,sha256 text not null,applied_at timestamptz not null default now());\nalter table freddo_private.deployment_versions enable row level security;\nrevoke all on freddo_private.deployment_versions from public,anon,authenticated;\n`;
  for(const file of files){

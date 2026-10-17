@@ -1,6 +1,6 @@
 # Cloud collection and independent operations
 
-Status: implementation prepared; production activation pending. Decision date: 16 October 2026.
+Status: implemented and activated; elapsed-day acceptance and remaining live verification pending. Decision date: 16 October 2026.
 
 Use the existing ChatGPT cloud schedule at 08:00 Europe/London for browser collection from ASDA, Tesco and Sainsbury's. A separate production OAuth client connects it to a narrow Supabase MCP receiver. The probe client does not gain production powers.
 

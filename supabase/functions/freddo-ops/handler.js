@@ -1,6 +1,6 @@
 import { fail } from '../freddo-ingest/contract.js';
 import { safeError } from '../freddo-ingest/handler.js';
-const fields={snapshot:[],admit:['request_key','source_id','effective_date','weight','reason'],remove:['request_key','membership_id','effective_date','reason'],recompute:['request_key','uk_date','reason'],evidence:['evidence_id'],review:['request_key','observation_id','expected_sequence','decision','reason'],correct:['request_key','observation_id','expected_sequence','reason','changes']};
+const fields={snapshot:[],history:['observation_id'],admit:['request_key','source_id','effective_date','weight','reason'],remove:['request_key','membership_id','effective_date','reason'],recompute:['request_key','uk_date','reason'],evidence:['evidence_id'],review:['request_key','observation_id','expected_sequence','decision','reason'],correct:['request_key','observation_id','expected_sequence','reason','changes']};
 const uuid=value=>typeof value==='string'&&/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(value);
 function validate(message){
  if(!message||Object.keys(message).some(k=>!['action','args'].includes(k))||!Object.hasOwn(fields,message.action))fail('VALIDATION_FAILED');
@@ -13,6 +13,7 @@ function validate(message){
   if(action==='remove'&&!uuid(args.membership_id))fail('VALIDATION_FAILED');
  }
  if(action==='evidence'&&!uuid(args.evidence_id))fail('VALIDATION_FAILED');
+ if(action==='history'&&!uuid(args.observation_id))fail('VALIDATION_FAILED');
  if(['review','correct'].includes(action)){
   if(typeof args.request_key!=='string'||!/^[A-Za-z0-9_-]{1,80}$/.test(args.request_key)||!uuid(args.observation_id)||!Number.isInteger(args.expected_sequence)||args.expected_sequence<1||typeof args.reason!=='string'||!args.reason.trim()||args.reason.length>2000)fail('VALIDATION_FAILED');
   if(action==='review'&&!['accepted','rejected'].includes(args.decision))fail('VALIDATION_FAILED');
