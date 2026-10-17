@@ -24,9 +24,12 @@ function historyPanel(observation){
  details.ontoggle=async()=>{if(!details.open||loaded)return;loaded=true;content.textContent='Loading history…';try{
   const history=await request('history',{observation_id:observation.id});content.replaceChildren();
   for(const revision of history.revisions){
-   const entry=element('section');entry.append(element('h4',`Revision ${revision.revision_number}`),element('p',`Observed ${date(revision.observed_at)} · Normal ${money(revision.normal_price_pence)} · Public offer ${money(revision.public_offer_price_pence)} · Loyalty ${money(revision.loyalty_price_pence)} · ${revision.weight_g}g`));
+   const entry=element('section');entry.append(element('h4',`Revision ${revision.revision_number}`),element('p',`Observed ${date(revision.observed_at)} · Normal ${money(revision.normal_price_pence)} · Public offer ${money(revision.public_offer_price_pence)} · Loyalty ${money(revision.loyalty_price_pence)} · ${revision.weight_g}g · ${revision.pack_count} bar(s)`));
    if(revision.correction_reason)entry.append(element('p',`Correction: ${revision.correction_reason}`));
    entry.append(element('p',revision.price_evidence_text));
+   for(const [label,conditions,expiry,wording] of [['Public offer',revision.offer_conditions,revision.offer_expires_at,revision.offer_expiry_text],['Loyalty offer',revision.loyalty_offer_conditions,revision.loyalty_offer_expires_at,revision.loyalty_offer_expiry_text]]){
+    entry.append(element('p',`${label}: ${conditions??'No conditions recorded'} · Expiry ${date(expiry)} · Source wording: ${wording??'Not recorded'}`));
+   }
    for(const review of revision.reviews)entry.append(element('p',`${date(review.created_at)} — ${review.decision} · ${review.actor} · ${review.note??review.reason_codes.join(', ')}`));
    content.append(entry);
   }
