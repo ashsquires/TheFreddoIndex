@@ -40,7 +40,7 @@ The deployment must not be represented as complete while any connection or elaps
 - The RSA recovery pair is in `~/Documents/Freddo Recovery/` with owner-only permissions. Separate maintenance/backup credentials are stored in Supabase. GitHub now has the separate export credential and public encryption key; both backup activation switches are enabled. The first encrypted cloud artifact was restored successfully into an isolated database (details below).
 - The existing daily task `6acfbd68ef908190b1123f2a6249fdf3` was updated and read back in ChatGPT with the production prompt, 08:00 Europe/London, DST-aware scheduled slots, and preferred 16,384-byte chunks (49,152 maximum). No duplicate was created. Its next unattended production executions remain acceptance gates.
 
-Remaining verification: synthetic live retention and operator mutation checks, recipient-side confirmation of production emails, and the elapsed-day acceptance gates. Owner sign-in, private image preview, cloud backup restoration and scheduled paused-index calculation are verified below. All 112 local tests and the four Deno entrypoint checks passed after the owner-only and production-client changes. No remaining ticket is closed solely on those local results.
+Remaining verification: operator mutation checks and deployed history display, recipient-side confirmation of production emails, and the elapsed-day acceptance gates. Owner sign-in, private image preview, cloud backup restoration and scheduled paused-index calculation are verified below. All 112 local tests and the four Deno entrypoint checks passed after the owner-only and production-client changes. No remaining ticket is closed solely on those local results.
 
 
 ### Production cloud persistence proof
@@ -67,3 +67,10 @@ The independent watchdog also recorded one accepted recovery email for the resto
 - Index calculation was enabled at 17:31 UTC. Cron created paused revision `593e4b5f-2560-4abf-8059-e1d67989c73f` at 17:35:03 UTC for the 09:00 UTC/10:00 UK cutoff, with zero admitted members and null average. Later runs through 21:10 UTC reused that revision without duplicates.
 - The independent watchdog recorded backup recovery receipt `01a145c8-1792-7806-9149-c38c30ad0189` and paused-index alert `01a145c8-1860-7246-9dab-d2b0b7e71d5a`, each with one delivery attempt. Six consecutive later maintenance runs completed with zero failures, zero new alerts and zero cleanup failures.
 - Owner magic-link sign-in to the deployed monitor succeeded at 21:14 UTC. It displayed all three retailer observations, paused index, completed backup, 0.57 MiB storage usage, and notification history. ASDA's private screenshot preview loaded at 1348×926 pixels via the authenticated operator endpoint; preview states its two-minute expiry. No public navigation link was added.
+
+
+### 17 October live follow-up
+
+The independent 05:00 UTC maintenance run removed synthetic diagnostic object `freddo-retention-synthetic-20261016.png`. Evidence `acf80540-8ffe-492d-a504-eec967326486` became expired at 05:00:13 UTC; cleanup state is deleted with one attempt and Storage reports no object. All three real prices and all three observation screenshots remained intact. The synthetic run is explicitly excluded from index eligibility; its historical timestamps are test fixtures, not retailer evidence.
+
+Migration `20261017045742_operator_review_history` was deployed at 04:59:08 UTC, followed by the operator endpoint update. It adds read-only, owner-authorized ordered review and correction history. The UI displays all correctable fields, reasons and original observation times. The public graph and navigation remain unchanged. 113 tests passed, the operator Deno check passed, and the build passed. Standards review found no issues; the spec review's missing offer-history fields were corrected and re-reviewed.
